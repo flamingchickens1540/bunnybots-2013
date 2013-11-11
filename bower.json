@@ -9,8 +9,9 @@
   ],
   "dependencies": {
     "bootstrap": ">= 3.0.0",
-    "angular": "1.2.0-rc.3",
-    "angular-bootstrap": "~0.6.0"
+    "angular": "1.2.0",
+    "angular-bootstrap": "~0.6.0",
+    "socket.io-client": "~0.9.16"
   },
   "readmeFilename": "README.md",
   "description": "See index.html",
