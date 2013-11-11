@@ -30,6 +30,9 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+//connect to this database
+db.connect('bunnybots2013test');
+
 app.get('/', function(req, res) {
 	res.render('index', {title:'Bunnybots'});
 });
