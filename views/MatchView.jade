@@ -1,0 +1,38 @@
+doctype 5
+html
+  head
+    link(href="/libs/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet", type="text/css")
+    link(rel='stylesheet', href='/css/style.css', type='text/css')
+  body
+  
+    .jumbotron#outer
+      img#bunny.img-polaroid(src="/img/bunnybot.png",align="right",width="90px",height="123")
+      h1#matchviewtitle(align="center") Match # 
+      .container
+        .jumbotron#progressbar
+          .progress
+            .progress-bar.progress-bar-success( role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%")
+          center 
+            h2 0:30
+      .container
+        .row
+          .col-md-6#leftcolred
+            .row
+              p#scoreleft 11
+            .row
+              p#foulsleft Fouls: 3
+          .col-md-6#rightcolblue
+            .row
+              p#scoreright 31
+            .row
+              p#foulsright Fouls: 2
+
+              
+                
+    left
+      a.btn.btn-lg.btn-primary#start Start
+      
+    right
+      a.btn.btn-lg.btn-primary#reset Reset
+
+ 

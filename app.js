@@ -31,10 +31,18 @@ if ('development' == app.get('env')) {
 }
 
 //connect to this database
-db.connect('bunnybots2013test');
+//db.connect('bunnybots2013test');
 
 app.get('/', function(req, res) {
-	res.render('index', {title:'Bunnybots'});
+  res.render('index', {title:'Bunnybots'});
+});
+
+app.get('/MatchView', function(req, res) {
+  res.render('MatchView', {title:'MatchView'});
+});
+
+app.get('/Verify', function(req, res) {
+  res.render('Verify', {title:'Verify'});
 });
 
 http.createServer(app).listen(app.get('port'), function(){

@@ -1,8 +1,51 @@
 doctype 5
 html
   head
-    title= title
-    link(rel='stylesheet', href='/css/style.css', type='text/css')
-  body
-    h1= title
-    p Welcome to #{title}
+    link(href="/libs/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet", type="text/css")
+      link(rel='stylesheet', href='/css/style.css', type='text/css')
+    body
+    
+        
+    .jumbotron#outer  
+      img#bunny.img-polaroid(src="/img/bunnybot.png",align="right",width="90px",height="123")
+      h1#maintitle(align="center") BunnyBots Main Control Page   
+      .container
+        .row-fluid
+          .col-md-5#leftcolred
+            .row
+              .col-md-6
+                h2 Team #1
+              .col-md-6
+                input.teamnumber
+            .row
+              .col-md-6
+                h2 Team #2
+              .col-md-6
+                input.teamnumber
+            .row
+              .col-md-6
+                h2 Team #3
+              .col-md-6
+                input.teamnumber
+          .col-md-1
+
+          .col-md-5#leftcolblue
+            .row
+              .col-md-6
+                h2 Team #1
+              .col-md-6
+                input.teamnumber
+            .row
+              .col-md-6
+                h2 Team #2
+              .col-md-6
+                input.teamnumber
+            .row
+              .col-md-6
+                h2 Team #3
+              .col-md-6
+                input.teamnumber
+  center 
+    a.btn.btn-lg.btn-primary#creatematch Create Match
+
+      
