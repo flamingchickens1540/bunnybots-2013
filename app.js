@@ -8,7 +8,7 @@ var http = require('http');
 var path = require('path');
 
 var db = require('./modules/db.js');
-var io = require('socket.io').listen(app);;
+//var io = require('socket.io').listen(app);;
 
 var app = express();
 
