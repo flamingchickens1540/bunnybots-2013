@@ -2,50 +2,35 @@ doctype 5
 html
   head
     link(href="/libs/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet", type="text/css")
-      link(rel='stylesheet', href='/css/style.css', type='text/css')
-    body
-    
-        
-    .jumbotron#outer  
-      img#bunny.img-polaroid(src="/img/bunnybot.png",align="right",width="90px",height="123")
-      h1#maintitle(align="center") BunnyBots Main Control Page   
+    link(rel='stylesheet', href='/css/index.css', type='text/css')
+    //ELLIOT'S CSS: link(rel='stylesheet', href='/css/style.css', type='text/css')
+  body
+    //img#bunny.img-polaroid(src="/img/bunnybot.png")
+    header.navbar.navbar-inverse.navbar-fixed-top
       .container
-        .row-fluid
-          .col-md-5#leftcolred
-            .row
-              .col-md-6
-                h2 Team #1
-              .col-md-6
-                input.teamnumber
-            .row
-              .col-md-6
-                h2 Team #2
-              .col-md-6
-                input.teamnumber
-            .row
-              .col-md-6
-                h2 Team #3
-              .col-md-6
-                input.teamnumber
-          .col-md-1
+        .navbar-header
+          a.navbar-brand(href="#") Bunnybots
+        nav
+          //on the left side of the nav
+          ul.nav.navbar-nav
+            li
+              a(href="#") link
+            li
+              a(href="#") link
+            li
+              a(href="#") link
+            li
+              a(href="#") link
+          //on the right side of the nav
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href="http://www.team1540.org", target="blank") Team 1540
 
-          .col-md-5#leftcolblue
-            .row
-              .col-md-6
-                h2 Team #1
-              .col-md-6
-                input.teamnumber
-            .row
-              .col-md-6
-                h2 Team #2
-              .col-md-6
-                input.teamnumber
-            .row
-              .col-md-6
-                h2 Team #3
-              .col-md-6
-                input.teamnumber
-  center 
-    a.btn.btn-lg.btn-primary#creatematch Create Match
+    .container
+      p nelknfj
 
-      
+
+    footer.navbar.navbar-fixed-bottom
+      .container
+        p &copy 2013 Flaming Chickens
+
