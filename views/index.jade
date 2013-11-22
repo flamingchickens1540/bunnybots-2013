@@ -1,36 +1,45 @@
-doctype 5
-html
+!!!
+html(ng-app="bunnybots2013")
   head
-    link(href="/libs/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet", type="text/css")
-    link(rel='stylesheet', href='/css/index.css', type='text/css')
-    //ELLIOT'S CSS: link(rel='stylesheet', href='/css/style.css', type='text/css')
+    meta(charset='utf-8')
+    base(href='/')
+    title Bunnybots
+    link(rel='stylesheet', type='text/css', href='/libs/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='/css/index.css')
   body
-    //img#bunny.img-polaroid(src="/img/bunnybot.png")
-    header.navbar.navbar-inverse.navbar-fixed-top
-      .container
-        .navbar-header
-          a.navbar-brand(href="#") Bunnybots
-        nav
-          //on the left side of the nav
-          ul.nav.navbar-nav
-            li
-              a(href="#") link
-            li
-              a(href="#") link
-            li
-              a(href="#") link
-            li
-              a(href="#") link
-          //on the right side of the nav
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href="http://www.team1540.org", target="blank") Team 1540
+    .container(ng-controller='AppCtrl')
+      //img#bunny.img-polaroid(src="/img/bunnybot.png")
+      header.navbar.navbar-inverse.navbar-fixed-top
+        .container
+          .navbar-header
+            a.navbar-brand(href="#") Bunnybots
+          nav
+            //on the left side of the nav
+            ul.nav.navbar-nav
+              li
+                a(href="view1") View1
+              li
+                a(href="view2") View2
+              li
+                a(href="#") link
+              li
+                a(href="#") link
+            //on the right side of the nav
+            ul.nav.navbar-nav.navbar-right
+              li
+                a(href="http://www.team1540.org", target="blank") Team 1540
+      h2 Hello {{$rootScope.test}}
 
-    .container
-      p nelknfj
+      div(ng-view)
 
+      div
+        | Angular seed app: v
+        span(app-version)
 
-    footer.navbar.navbar-fixed-bottom
-      .container
-        p &copy 2013 Flaming Chickens
+      footer.navbar.navbar-fixed-bottom
+        .container
+          p &copy 2013 Flaming Chickens
 
+    script(src='libs/angular/angular.js')
+    script(src='libs/angular-route/angular-route.js')
+    script(src='js/main.js')
