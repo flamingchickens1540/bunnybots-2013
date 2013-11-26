@@ -7,20 +7,25 @@ var app = angular.module('bunnybots2013', ['ngRoute']);
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider.
 
-    when('/view1', {
-      templateUrl: 'partials/partial1',
+    when('/', {
+      templateUrl: 'partials/master_match_view',
       controller: 'MyCtrl1'
     }).
 
-    when('/view2', {
-      templateUrl: 'partials/partial2',
+    when('/match_view', {
+      templateUrl: 'partials/public_match_view',
       controller: 'MyCtrl2'
     }).
-    
-    otherwise({
-      redirectTo: '/view1'
-    });
 
+    when('/partial2', {
+      templateUrl: 'partials/partial2',
+      controller: 'MyCtrl3'
+    })
+    
+    //default - turn off for development
+    //otherwise({
+      //redirectTo: '/view1'
+    //});
   $locationProvider.html5Mode(true);
 });
 
@@ -31,19 +36,23 @@ app.controller('AppCtrl', function ($scope, $http) {
     url: '/api/name'
   }).
   success(function (data, status, headers, config) {
-    $scope.name = data.name;
+    $scope.test = data.name;
   }).
   error(function (data, status, headers, config) {
-    $scope.name = 'Error!'
+    $scope.test = 'Error!'
   });
 
 });
 app.controller('MyCtrl1', function ($scope) {
-  // write Ctrl here
+  $scope.hello = 'test';
 
 });
 app.controller('MyCtrl2', function ($scope) {
-  // write Ctrl here
+  $scope.hello = 'test';
+
+});
+app.controller('MyCtrl3', function ($scope) {
+  $scope.hello = 'test';
 
 });
 

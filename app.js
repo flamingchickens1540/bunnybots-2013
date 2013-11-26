@@ -1,4 +1,4 @@
-
+'use strict';
 /**
  * Module dependencies
  */
@@ -8,7 +8,9 @@ var express = require('express'),
   path = require('path');
 
 var db = require('./modules/db.js');
-//var io = require('socket.io').listen(app);;
+//var io = require('socket.io').listen(app);
+
+//db.connect();
 
 var app = module.exports = express();
 
@@ -78,9 +80,9 @@ app.get('/Verify', function(req, res) {
 
 
 // redirect all others to the index (HTML5 history)
-app.get('*', function(req, res){
-  res.render('index');
-});
+//app.get('*', function(req, res){
+  //res.render('index');
+//});
 
 /**
  * Start Server

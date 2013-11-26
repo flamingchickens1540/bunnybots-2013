@@ -7,19 +7,19 @@ html(ng-app="bunnybots2013")
     link(rel='stylesheet', type='text/css', href='/libs/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', type='text/css', href='/css/index.css')
   body
-    .container(ng-controller='AppCtrl')
+    .container#mainWrapper(ng-controller='AppCtrl')
       //img#bunny.img-polaroid(src="/img/bunnybot.png")
       header.navbar.navbar-inverse.navbar-fixed-top
         .container
           .navbar-header
-            a.navbar-brand(href="#") Bunnybots
+            a.navbar-brand(href="/") Bunnybots
           nav
             //on the left side of the nav
             ul.nav.navbar-nav
               li
-                a(href="view1") View1
+                a(href="match_view") View1
               li
-                a(href="view2") View2
+                a(href="partial2") View2
               li
                 a(href="#") link
               li
@@ -28,15 +28,11 @@ html(ng-app="bunnybots2013")
             ul.nav.navbar-nav.navbar-right
               li
                 a(href="http://www.team1540.org", target="blank") Team 1540
-      h2 Hello {{$rootScope.test}}
+      
+      .container
+        div(ng-view)
 
-      div(ng-view)
-
-      div
-        | Angular seed app: v
-        span(app-version)
-
-      footer.navbar.navbar-fixed-bottom
+      footer.navbar-fixed-bottom
         .container
           p &copy 2013 Flaming Chickens
 
