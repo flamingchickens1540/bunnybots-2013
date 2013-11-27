@@ -8,7 +8,7 @@ app.config(function ($routeProvider, $locationProvider) {
   $routeProvider.
 
     when('/', {
-      templateUrl: 'partials/master_match_view',
+      templateUrl: 'partials/referee',
       controller: 'MyCtrl1'
     }).
 
@@ -17,15 +17,40 @@ app.config(function ($routeProvider, $locationProvider) {
       controller: 'MyCtrl2'
     }).
 
-    when('/partial2', {
-      templateUrl: 'partials/partial2',
+    when('/master', {
+      templateUrl: 'partials/master_match_view',
       controller: 'MyCtrl3'
-    })
+    }).
+
+    when('/input', {
+      templateUrl: 'partials/master_match_input',
+      controller: 'MyCtrl4'
+    }).
+
+    when('/verify', {
+      templateUrl: 'partials/master_match_verify',
+      controller: 'MyCtrl5'
+    }).
+
+    when('/referee', {
+      templateUrl: 'partials/referee',
+      controller: 'MyCtrl6'
+    }).
+
+    when('/rankings', {
+      templateUrl: 'partials/team_rankings',
+      controller: 'MyCtrl7'
+    }).
+
+    when('/matches', {
+      templateUrl: 'partials/match_history',
+      controller: 'MyCtrl8'
+    }).
     
     //default - turn off for development
-    //otherwise({
-      //redirectTo: '/view1'
-    //});
+    otherwise({
+      redirectTo: '/home'
+    });
   $locationProvider.html5Mode(true);
 });
 
@@ -52,6 +77,26 @@ app.controller('MyCtrl2', function ($scope) {
 
 });
 app.controller('MyCtrl3', function ($scope) {
+  $scope.hello = 'test';
+
+});
+app.controller('MyCtrl4', function ($scope) {
+  $scope.hello = 'test';
+
+});
+app.controller('MyCtrl5', function ($scope) {
+  $scope.hello = 'test';
+
+});
+app.controller('MyCtrl6', function ($scope) {
+  $scope.hello = 'test';
+
+});
+app.controller('MyCtrl7', function ($scope) {
+  $scope.hello = 'test';
+
+});
+app.controller('MyCtrl8', function ($scope) {
   $scope.hello = 'test';
 
 });

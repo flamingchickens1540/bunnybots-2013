@@ -1,0 +1,92 @@
+link(rel='stylesheet', type='text/css', href='/css/style.css')
+.panel.panel-default
+  .panel-heading
+    h1.text-center BunnyBots Main Control Page 
+  .panel-body
+      .row
+        .col-sm-5#leftcolred
+          .row
+            .col-sm-3
+              p.pull-right.teams red1
+            .col-sm-8.col-offset-sm-1
+              input.input-lg.pull-right
+          .row
+            .col-sm-3
+              p.pull-right.teams red2
+            .col-sm-8.col-offset-sm-1
+              input.input-lg.pull-right
+          .row
+            .col-sm-3
+              p.pull-right.teams red3
+            .col-sm-8.col-offset-sm-1
+              input.input-lg.pull-right
+
+        .col-sm-2
+          p.text-center.score v.
+
+        .col-sm-5#rightcolblue
+          .row
+            .col-sm-8
+              input.input-lg.pull-left
+            .col-sm-3.col-offset-sm-1
+              p.pull-left.teams blue1
+          .row
+            .col-sm-8
+              input.input-lg.pull-left
+            .col-sm-3.col-offset-sm-1
+              p.pull-left.teams blue2
+          .row
+            .col-sm-8
+              input.input-lg.pull-left
+            .col-sm-3.col-offset-sm-1
+              p.pull-left.teams blue3
+
+  .panel-footer
+    a.btn.btn-primary Submit
+
+// OLD CODE
+//
+  .panel.panel-default
+    .panel-heading
+      h1.text-center BunnyBots Main Control Page 
+    .panel-body
+      .container
+        .row
+          .col-md-5#leftcolred
+            .row
+              .col-md-6
+                h2 Team #1
+              .col-md-6
+                input.input-lg
+            .row
+              .col-md-6
+                h2 Team #2
+              .col-md-6
+                input.input-lg
+            .row
+              .col-md-6
+                h2 Team #3
+              .col-md-6
+                input.input-lg
+          .col-md-1
+
+          .col-md-5#rightcolblue
+            .row
+              .col-md-6
+                h2 Team #1
+              .col-md-6
+                input.input-lg
+            .row
+              .col-md-6
+                h2 Team #2
+              .col-md-6
+                input.input-lg
+            .row
+              .col-md-6
+                h2 Team #3
+              .col-md-6
+                input.input-lg
+      center 
+        a.btn.btn-lg.btn-primary#creatematch Create Match
+
+        
