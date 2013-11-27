@@ -80,9 +80,9 @@ app.get('/Verify', function(req, res) {
 
 
 // redirect all others to the index (HTML5 history)
-//app.get('*', function(req, res){
-  //res.render('index');
-//});
+app.get('*', function(req, res){
+  res.render('index');
+});
 
 /**
  * Start Server
