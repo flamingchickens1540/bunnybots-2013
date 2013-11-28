@@ -9,17 +9,17 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
             .col-sm-3
               p.pull-right.teams red1
             .col-sm-8.col-offset-sm-1
-              input.input-lg.pull-right
+              input.input-lg.pull-right(ng-model="redTeams[0]")
           .row
             .col-sm-3
               p.pull-right.teams red2
             .col-sm-8.col-offset-sm-1
-              input.input-lg.pull-right
+              input.input-lg.pull-right(ng-model="redTeams[1]")
           .row
             .col-sm-3
               p.pull-right.teams red3
             .col-sm-8.col-offset-sm-1
-              input.input-lg.pull-right
+              input.input-lg.pull-right(ng-model="redTeams[2]")
 
         .col-sm-2
           p.text-center.score v.
@@ -27,22 +27,22 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
         .col-sm-5#rightcolblue
           .row
             .col-sm-8
-              input.input-lg.pull-left
+              input.input-lg.pull-left(ng-model="blueTeams[0]")
             .col-sm-3.col-offset-sm-1
               p.pull-left.teams blue1
           .row
             .col-sm-8
-              input.input-lg.pull-left
+              input.input-lg.pull-left(ng-model="blueTeams[1]")
             .col-sm-3.col-offset-sm-1
               p.pull-left.teams blue2
           .row
             .col-sm-8
-              input.input-lg.pull-left
+              input.input-lg.pull-left(ng-model="blueTeams[2]")
             .col-sm-3.col-offset-sm-1
               p.pull-left.teams blue3
 
   .panel-footer
-    a.btn.btn-primary Submit
+    a.btn.btn-primary(ng-click="createMatch()") Submit
 
 // OLD CODE
 //
@@ -88,5 +88,6 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
                 input.input-lg
       center 
         a.btn.btn-lg.btn-primary#creatematch Create Match
+        
 
         

@@ -3,22 +3,22 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
 .well.well-lg.well-yellow
   .row
     .col-sm-offset-3.col-sm-6
-      p.score.text-center 2:30
+      p.score.text-center(ng-bind="timeLeft", ng-init="timeLeft = '2:30'; barWidth = {width: '0%'}")
   .row
     .col-sm-12
       .progress
-        .progress-bar.progress-bar-success(role="progressbar", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100", style="width: 40%")
-
-
+        .progress-bar(role="progressbar", ng-style="barWidth", ng-class="barColorClass")
+        //div(prog-bar) 
+        //DOES NOT WORK YET, SEE main.js
 
 .row
   .col-md-2#leftcolred
     .row
-      p.pull-right.teams 1540
+      p.pull-right.teams(ng-bind="redTeams[0]")
     .row
-      p.pull-right.teams 2471
+      p.pull-right.teams(ng-bind="redTeams[1]")
     .row
-      p.pull-right.teams 1114
+      p.pull-right.teams(ng-bind="redTeams[2]")
   
   .col-md-8
     .row
@@ -32,15 +32,16 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
 
   .col-md-2#rightcolblue
     .row
-      p.pull-left.teams 1540
+      p.pull-left.teams(ng-bind="blueTeams[0]")
     .row
-      p.pull-left.teams 2471
+      p.pull-left.teams(ng-bind="blueTeams[1]")
     .row
-      p.pull-left.teams 1114
+      p.pull-left.teams(ng-bind="blueTeams[2]")
 
 //controls
 .row
   .col-sm-12 
     .btn-group.btn-group-control
-      button.btn.btn-lg.btn-primary#start Start
-      button.btn.btn-lg.btn-primary#reset Reset
+      button.btn.btn-lg.btn-primary#start(ng-click="startMatch(); matchRunning = !matchRunning;", ng-show="!matchRunning") Start
+      button.btn.btn-lg.btn-primary#pause(ng-click="pauseMatch();matchRunning = !matchRunning;", ng-show="matchRunning") Pause
+      button.btn.btn-lg.btn-primary#reset(ng-click="matchRunning = false; barWidth = {'width':'0%'}; start = null;") Reset
