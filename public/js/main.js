@@ -112,20 +112,7 @@ app.config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 });
 
-app.controller('AppCtrl', function ($scope, $rootScope, $http) {
-
-  //what is this? delete?
-  $http({
-    method: 'GET',
-    url: '/api/name'
-  }).
-  success(function (data, status, headers, config) {
-    $scope.test = data.name;
-  }).
-  error(function (data, status, headers, config) {
-    $scope.test = 'Error!'
-  });
-
+app.controller('AppCtrl', function ($scope, $rootScope) {
   //update by master only
   $rootScope.currentTeams = {red:[],blue:[]};
 
@@ -258,20 +245,4 @@ app.controller('MyCtrl7', function ($scope) {
 app.controller('MyCtrl8', function ($scope) {
   $scope.hello = 'test';
 
-});
-
-
-//Service, directive, and filter
-app.directive('appVersion', function (version) {
-  return function(scope, elm, attrs) {
-    elm.text(version);
-  };
-});
-
-app.value('version', '0.1');
-
-app.filter('interpolate', function (version) {
-  return function (text) {
-    return String(text).replace(/\%VERSION\%/mg, version);
-  }
 });

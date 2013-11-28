@@ -62,23 +62,6 @@ app.get('/partials/:name', function (req, res) {
   res.render('partials/' + name);
 });
 
-// JSON API
-app.get('/api/name', function (req, res) {
-  res.json({
-    name: 'Bob'
-  });
-});
-
-//Elliot's functions
-app.get('/MatchView', function(req, res) {
-  res.render('MatchView', {title:'MatchView'});
-});
-
-app.get('/Verify', function(req, res) {
-  res.render('Verify', {title:'Verify'});
-});
-
-
 // redirect all others to the index (HTML5 history)
 app.get('*', function(req, res){
   res.render('index');
