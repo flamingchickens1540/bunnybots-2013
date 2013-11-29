@@ -4,8 +4,11 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
       width: 80px;
       margin: 5px 0px 5px 0px;
       padding: 20px 0px 20px 0px;
-      background-color: gray;
+      background-color: white;
       border-radius: 20px;
+      }
+      .gray {
+      background-color: gray;
       }
       .red {
       background-color: #E9474B;
@@ -27,79 +30,65 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
       }
     h1#header.text-center BunnyBots Referee Panel
     .container
-      .row-fluid
-        .span3
+      .row
+        .col-xs-3
           h3.text-center Hole Color
-          .span12.red.button(onclick='tinge(\'E8BABB\')')
-          .span12.button(onclick='tinge(\'CCCCCC\')')
-          .span12.blue.button(onclick='tinge(\'C2BEED\')')
-        #fieldPicture.span6
+          br
+          div(style='margin-left: 8px;')
+            .col-xs-3.button
+            .col-xs-3.red.button
+            .col-xs-3.button
+            .col-xs-3.button
+            .col-xs-3.gray.button
+            .col-xs-3.button
+            .col-xs-3.button
+            .col-xs-3.blue.button
+        #fieldPicture.col-xs-6
           p.text-center Placeholder for picture of field
-        .span3
-          h3.text-center    Teleop Points
-          .span1
-          .span5.text-center
-            p#redTelePoints 0
-            .red.button.text-center(onclick='add(redTelePoints.id, 1)')
+        .col-xs-3
+          h3.text-center     Teleop Points
+          .col-xs-1
+          .col-xs-5.text-center
+            p 0
+            .red.button.text-center
               p ↑
-            .red.button.text-center(onclick='subtract(redTelePoints.id, 1)')
+            .red.button.text-center
               p ↓
-          .span1
-          .span4.text-center
-            p#blueTelePoints 0
-            .blue.button.text-center(onclick='add(blueTelePoints.id, 1)')
+          .col-xs-1
+          .col-xs-4.text-center
+            p 0
+            .blue.button.text-center
               p ↑
-            .blue.button.text-center(onclick='subtract(blueTelePoints.id, 1)')
+            .blue.button.text-center
               p ↓
-      .row-fluid
-        #autoBox.span4
+      .row
+        #autoBox.col-xs-4
           h3.text-center Autonomous Points
-          .span1
-          .span5.text-center
-            p#redAutoPoints 0
-            .red.button.text-center(onclick='add(redAutoPoints.id, 1)')
+          .col-xs-1
+          .col-xs-5.text-center
+            p 0
+            .red.button.text-center
               p ↑
-            .red.button.text-center(onclick='subtract(redAutoPoints.id, 1)')
+            .red.button.text-center
               p ↓
-          .span5.text-center
-            p#blueAutoPoints 0
-            .blue.button.text-center(onclick='add(blueAutoPoints.id, 1)')
+          .col-xs-5.text-center
+            p 0
+            .blue.button.text-center
               p ↑
-            .blue.button.text-center(onclick='subtract(blueAutoPoints.id, 1)')
+            .blue.button.text-center
               p ↓
-        .span4
+        .col-xs-4
           h3.text-center Foul Points
-          .span2
-          .span4.text-center
-            p#redFoulPoints 0
-            .red.button.text-center(onclick='add(redFoulPoints.id, 10)')
+          .col-xs-2
+          .col-xs-4.text-center
+            p 0
+            .red.button.text-center
               p 10 points
-            .red.button.text-center(onclick='add(redFoulPoints.id, 5)')
+            .red.button.text-center
               p 5 points
-          .span4.text-center
-            p#blueFoulPoints 0
-            .blue.button.text-center(onclick='add(blueFoulPoints.id, 10)')
+          .col-xs-4.text-center
+            p 0
+            .blue.button.text-center
               p 10 points
-            .blue.button.text-center(onclick='add(blueFoulPoints.id, 5)')
+            .blue.button.text-center
               p 5 points
-    script(type='text/javascript')
-      window.onload = init();
-      function tinge(color)
-      {
-      document.body.style.backgroundColor = "#" + color;
-      }
-      function init()
-      {
-      document.getElementById("redAutoPoints").innerHTML = 0;
-      document.getElementById("blueAutoPoints").innerHTML = 0;
-      }
-      function add(turtle, amount)
-      {
-      var num = parseInt(document.getElementById(turtle).innerHTML, 10);
-      document.getElementById(turtle).innerHTML = num + amount;
-      }
-      function subtract(turtle, amount)
-      {
-      var num = parseInt(document.getElementById(turtle).innerHTML, 10);
-      document.getElementById(turtle).innerHTML = num - amount;
-      }
