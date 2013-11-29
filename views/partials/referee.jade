@@ -74,20 +74,20 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
       window.onload = init();
       function tinge(color)
       {
-      document.body.style.backgroundColor = "#" + color;
+        document.body.style.backgroundColor = "#" + color;
       }
       function init()
       {
-      document.getElementById("redAutoPoints").innerHTML = 0;
-      document.getElementById("blueAutoPoints").innerHTML = 0;
+        document.getElementById("redAutoPoints").innerHTML = 0;
+        document.getElementById("blueAutoPoints").innerHTML = 0;
       }
       function add(turtle, amount)
       {
-      var num = parseInt(document.getElementById(turtle).innerHTML, 10);
-      document.getElementById(turtle).innerHTML = num + amount;
+        var num = parseInt(document.getElementById(turtle).innerHTML, 10);
+        document.getElementById(turtle).innerHTML = num + amount;
       }
       function subtract(turtle, amount)
       {
-      var num = parseInt(document.getElementById(turtle).innerHTML, 10);
-      document.getElementById(turtle).innerHTML = num - amount;
+        var num = parseInt(document.getElementById(turtle).innerHTML, 10);
+        document.getElementById(turtle).innerHTML = num - amount;
       }
