@@ -18,18 +18,43 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
       background-color: black;
       color: white;
       }
-    h1.text-center BunnyBots Referee Panel
+      #autoBox {
+      margin-left: -25px;
+      margin-right: 22px;
+      }
+      #header {
+      margin-bottom: 30px;
+      }
+    h1#header.text-center BunnyBots Referee Panel
     .container
-      h3       Hole Color
       .row-fluid
-        .span1.red.button(onclick='tinge(\'E8BABB\')')
-        .span1.button(onclick='tinge(\'CCCCCC\')')
-        .span1.blue.button(onclick='tinge(\'C2BEED\')')
+        .span3
+          h3.text-center Hole Color
+          .span12.red.button(onclick='tinge(\'E8BABB\')')
+          .span12.button(onclick='tinge(\'CCCCCC\')')
+          .span12.blue.button(onclick='tinge(\'C2BEED\')')
         #fieldPicture.span6
           p.text-center Placeholder for picture of field
+        .span3
+          h3.text-center    Teleop Points
+          .span1
+          .span5.text-center
+            p#redTelePoints 0
+            .red.button.text-center(onclick='add(redTelePoints.id, 1)')
+              p ↑
+            .red.button.text-center(onclick='subtract(redTelePoints.id, 1)')
+              p ↓
+          .span1
+          .span4.text-center
+            p#blueTelePoints 0
+            .blue.button.text-center(onclick='add(blueTelePoints.id, 1)')
+              p ↑
+            .blue.button.text-center(onclick='subtract(blueTelePoints.id, 1)')
+              p ↓
       .row-fluid
-        .span4
+        #autoBox.span4
           h3.text-center Autonomous Points
+          .span1
           .span5.text-center
             p#redAutoPoints 0
             .red.button.text-center(onclick='add(redAutoPoints.id, 1)')
@@ -44,50 +69,37 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
               p ↓
         .span4
           h3.text-center Foul Points
-          .span5.text-center
+          .span2
+          .span4.text-center
             p#redFoulPoints 0
             .red.button.text-center(onclick='add(redFoulPoints.id, 10)')
               p 10 points
             .red.button.text-center(onclick='add(redFoulPoints.id, 5)')
               p 5 points
-          .span5.text-center
+          .span4.text-center
             p#blueFoulPoints 0
             .blue.button.text-center(onclick='add(blueFoulPoints.id, 10)')
               p 10 points
             .blue.button.text-center(onclick='add(blueFoulPoints.id, 5)')
               p 5 points
-        .span4
-          h3.text-center Teleop Points
-          .span5.text-center
-            p#redTelePoints 0
-            .red.button.text-center(onclick='add(redTelePoints.id, 1)')
-              p ↑
-            .red.button.text-center(onclick='subtract(redTelePoints.id, 1)')
-              p ↓
-          .span5.text-center
-            p#blueTelePoints 0
-            .blue.button.text-center(onclick='add(blueTelePoints.id, 1)')
-              p ↑
-            .blue.button.text-center(onclick='subtract(blueTelePoints.id, 1)')
-              p ↓
     script(type='text/javascript')
       window.onload = init();
       function tinge(color)
       {
-        document.body.style.backgroundColor = "#" + color;
+      document.body.style.backgroundColor = "#" + color;
       }
       function init()
       {
-        document.getElementById("redAutoPoints").innerHTML = 0;
-        document.getElementById("blueAutoPoints").innerHTML = 0;
+      document.getElementById("redAutoPoints").innerHTML = 0;
+      document.getElementById("blueAutoPoints").innerHTML = 0;
       }
       function add(turtle, amount)
       {
-        var num = parseInt(document.getElementById(turtle).innerHTML, 10);
-        document.getElementById(turtle).innerHTML = num + amount;
+      var num = parseInt(document.getElementById(turtle).innerHTML, 10);
+      document.getElementById(turtle).innerHTML = num + amount;
       }
       function subtract(turtle, amount)
       {
-        var num = parseInt(document.getElementById(turtle).innerHTML, 10);
-        document.getElementById(turtle).innerHTML = num - amount;
+      var num = parseInt(document.getElementById(turtle).innerHTML, 10);
+      document.getElementById(turtle).innerHTML = num - amount;
       }
