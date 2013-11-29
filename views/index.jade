@@ -8,7 +8,7 @@ html(ng-app="bunnybots2013")
     link(rel='stylesheet', type='text/css', href='/css/index.css')
   body
     .container#mainWrapper(ng-controller='AppCtrl')
-      //img#bunny.img-polaroid(src="/img/bunnybot.png")
+      //- img#bunny.img-polaroid(src="/img/bunnybot.png")
       header.navbar.navbar-inverse.navbar-fixed-top
         .container
           .navbar-header
@@ -42,6 +42,8 @@ html(ng-app="bunnybots2013")
         .container
           p &copy 2013 Flaming Chickens
 
+    script(src='libs/socket.io-client/dist/socket.io.min.js')
     script(src='libs/angular/angular.min.js')
+    script(src='libs/angular-socket-io/socket.js')
     script(src='libs/angular-route/angular-route.min.js')
     script(src='js/main.js')

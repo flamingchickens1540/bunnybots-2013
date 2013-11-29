@@ -60,19 +60,21 @@ var formatMilliseconds = function formatMillisceonds(time) {
   return minutes +':'+ seconds;
 };
 
-var app = angular.module('bunnybots2013', ['ngRoute']);
+var app = angular.module('bunnybots2013', ['ngRoute', 'btford.socket-io']);
 
 app.config(function ($routeProvider, $locationProvider) {
+
+app.config(function ($routeProvider, $locationProvider, socketProvider) {
   $routeProvider.
 
     when('/', {
       templateUrl: 'partials/referee',
-      controller: 'MyCtrl1'
+      controller: 'HomePageCtrl'
     }).
 
     when('/match_view', {
       templateUrl: 'partials/public_match_view',
-      controller: 'MyCtrl2'
+      controller: 'PublicMatchViewCtrl'
     }).
 
     when('/master', {
@@ -87,45 +89,45 @@ app.config(function ($routeProvider, $locationProvider) {
 
     when('/verify', {
       templateUrl: 'partials/master_match_verify',
-      controller: 'MyCtrl5'
+      controller: 'MasterMatchVerifyCtrl'
     }).
 
     when('/referee', {
       templateUrl: 'partials/referee',
-      controller: 'MyCtrl6'
+      controller: 'RefereeCtrl'
     }).
 
     when('/rankings', {
       templateUrl: 'partials/team_rankings',
-      controller: 'MyCtrl7'
+      controller: 'TeamRankingsCtrl'
     }).
 
     when('/matches', {
       templateUrl: 'partials/match_history',
-      controller: 'MyCtrl8'
+      controller: 'MatchHistoryCtrl'
     }).
     
     //default - turn off for development
     otherwise({
-      redirectTo: '/home'
+      redirectTo: '/home' //or a 404 page?
     });
   $locationProvider.html5Mode(true);
 });
 
-app.controller('AppCtrl', function ($scope, $rootScope) {
+app.controller('AppCtrl', function ($scope, $rootScope, socket) {
   //update by master only
   $rootScope.currentTeams = {red:[],blue:[]};
 
 });
-app.controller('MyCtrl1', function ($scope) {
+app.controller('HomePageCtrl', function ($scope) {
+  
   $scope.hello = 'test';
+});
+app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket) {
 
 });
-app.controller('MyCtrl2', function ($scope) {
-  $scope.hello = 'test';
 
-});
-app.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location) {
+app.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location, socket) {
 
   $scope.redTeams = $rootScope.currentTeams.red;
   $scope.blueTeams = $rootScope.currentTeams.blue;
@@ -186,7 +188,7 @@ app.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location) {
   };
 });
 
-app.controller('MasterMatchInputCtrl', function ($scope, $rootScope, $location) {
+app.controller('MasterMatchInputCtrl', function ($scope, $rootScope, $location, socket) {
   $scope.redTeams = [];
   $scope.blueTeams = [];
 
@@ -212,6 +214,24 @@ app.controller('MasterMatchInputCtrl', function ($scope, $rootScope, $location) 
   };
 });
 
+app.controller('MasterMatchVerifyCtrl', function ($scope, $rootScope, socket, $location) {
+});
+
+app.controller('RefereeCtrl', function ($scope) {
+  $scope.hello = 'test';
+
+});
+app.controller('TeamRankingsCtrl', function ($scope) {
+  $scope.hello = 'test';
+
+});
+app.controller('MatchHistoryCtrl', function ($scope) {
+  $scope.hello = 'test';
+
+});
+
+
+//FOR THE TIMER
 // DOES NOT WORK. SCREW THIS FOR NOW. learn later.
 /*app.directive('progBar', function() {
   return {
@@ -229,20 +249,3 @@ app.controller('MasterMatchInputCtrl', function ($scope, $rootScope, $location) 
     link: function(scope, elements, attrs) {}
   };
 });*/
-
-app.controller('MyCtrl5', function ($scope) {
-  $scope.hello = 'test';
-
-});
-app.controller('MyCtrl6', function ($scope) {
-  $scope.hello = 'test';
-
-});
-app.controller('MyCtrl7', function ($scope) {
-  $scope.hello = 'test';
-
-});
-app.controller('MyCtrl8', function ($scope) {
-  $scope.hello = 'test';
-
-});
