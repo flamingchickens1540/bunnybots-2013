@@ -1,66 +1,153 @@
 link(rel='stylesheet', type='text/css', href='/css/style.css')
 
-h1#header.text-center BunnyBots Referee Panel
-.container
-  .row
-        .col-sm-3
-          h3.text-center Hole Color
-          br
-          div(style='margin-left: 8px;')
-            .col-sm-3.button
-            .col-sm-3.red.button
-            .col-sm-3.button
-            .col-sm-3.button
-            .col-sm-3.gray.button
-            .col-sm-3.button
-            .col-sm-3.button
-            .col-sm-3.blue.button
-        #fieldPicture.col-sm-6
-          p.text-center Placeholder for picture of field
-        .col-sm-3
-          h3.text-center     Teleop Points
-          .col-sm-1
-          .col-sm-5.text-center
-            p 0
-            .red.button.text-center
-              p ↑
-            .red.button.text-center
-              p ↓
-          .col-sm-1
-          .col-sm-4.text-center
-            p 0
-            .blue.button.text-center
-              p ↑
-            .blue.button.text-center
-              p ↓
-  .row
-        #autoBox.col-sm-4
-          h3.text-center Autonomous Points
-          .col-sm-1
-          .col-sm-5.text-center
-            p 0
-            .red.button.text-center
-              p ↑
-            .red.button.text-center
-              p ↓
-          .col-sm-5.text-center
-            p 0
-            .blue.button.text-center
-              p ↑
-            .blue.button.text-center
-              p ↓
-        .col-sm-4
-          h3.text-center Foul Points
-          .col-sm-2
-          .col-sm-4.text-center
-            p 0
-            .red.button.text-center
-              p 10 points
-            .red.button.text-center
-              p 5 points
-          .col-sm-4.text-center
-            p 0
-            .blue.button.text-center
-              p 10 points
-            .blue.button.text-center
-              p 5 points
+h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
+
+.row
+  //autonomous panel
+  .col-sm-3
+    .panel.panel-default
+      .panel-heading
+        h4.text-center Autonomous
+      .panel-body
+        p.text-center Hole Color
+        .row
+          .btn-group.btn-group-lg.btn-group-justified
+            btn.btn.btn-default.btn-danger Red
+            btn.btn.btn-default -
+            btn.btn.btn-default.btn-primary Blue
+
+
+    //fouls
+    .panel.panel-default
+      .panel-heading
+        h4.text-center Fouls
+      .panel-body
+        //red
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="redFouls", ng-init="redFouls=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger
+              .glyphicon.glyphicon-plus.white-glyph
+
+        //blue
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="blueFouls", ng-init="blueFouls=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary
+              .glyphicon.glyphicon-plus.white-glyph
+
+
+
+  //information and match timing
+  .col-sm-6
+    .row
+      .col-sm-10.col-sm-offset-1
+        p.score.text-center(ng-bind="timeLeft", ng-init="timeLeft='2:30'")
+
+    img.img-polaroid(src="http://www.placehold.it/550x300")
+
+
+
+  //teleop panel
+  .col-sm-3
+    .panel.panel-default
+      .panel-heading
+        h4.text-center Scoring
+      .panel-body
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="redScore", ng-init="redScore=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger
+              .glyphicon.glyphicon-plus.white-glyph
+
+        //blue
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="blueScore", ng-init="blueScore=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary
+              .glyphicon.glyphicon-plus.white-glyph
+
+
+//
+  link(rel='stylesheet', type='text/css', href='/css/style.css')
+
+  h1#header.text-center BunnyBots Referee Panel
+  .container
+    .row
+          .col-sm-3
+            h3.text-center Hole Color
+            br
+            div
+              .col-sm-3.button
+              .col-sm-3.red.button
+              .col-sm-3.button
+              .col-sm-3.button
+              .col-sm-3.gray.button
+              .col-sm-3.button
+              .col-sm-3.button
+              .col-sm-3.blue.button
+          #fieldPicture.col-sm-6
+            p.text-center Placeholder for picture of field
+          .col-sm-3
+            h3.text-center     Teleop Points
+            .col-sm-1
+            .col-sm-5.text-center
+              p 0
+              .red.button.text-center
+                p ↑
+              .red.button.text-center
+                p ↓
+            .col-sm-1
+            .col-sm-4.text-center
+              p 0
+              .blue.button.text-center
+                p ↑
+              .blue.button.text-center
+                p ↓
+    .row
+          #autoBox.col-sm-4
+            h3.text-center Autonomous Points
+            .col-sm-1
+            .col-sm-5.text-center
+              p 0
+              .red.button.text-center
+                p ↑
+              .red.button.text-center
+                p ↓
+            .col-sm-5.text-center
+              p 0
+              .blue.button.text-center
+                p ↑
+              .blue.button.text-center
+                p ↓
+          .col-sm-4
+            h3.text-center Foul Points
+            .col-sm-2
+            .col-sm-4.text-center
+              p 0
+              .red.button.text-center
+                p 10 points
+              .red.button.text-center
+                p 5 points
+            .col-sm-4.text-center
+              p 0
+              .blue.button.text-center
+                p 10 points
+              .blue.button.text-center
+                p 5 points
