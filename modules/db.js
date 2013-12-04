@@ -31,8 +31,6 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var teamSchema = new mongoose.Schema({
 	id: String,
   name: String,
-	matches: [{type: ObjectId, ref: 'Match'}],
-
 	qualScore: {type: Number, default: 0}
 });
 
@@ -40,13 +38,22 @@ var matchSchema = new mongoose.Schema({
 	id: Number,
 	time: Number,
 
-	redTeams: [{type: ObjectId, ref: 'Team'}],
 	redScore: Number,
 	redFouls: Number,
 
-	blueTeams: [{type: ObjectId, ref: 'Team'}],
 	blueScore: Number,
 	blueFouls: Number
+});
+
+
+//CIRCULAR REFERENCES
+teamSchema.add({
+  matches: [{type: ObjectId, ref: 'Match'}]
+});
+
+matchSchema.add({
+  redTeams: [{type: ObjectId, ref: 'Team'}],
+  blueTeams: [{type: ObjectId, ref: 'Team'}]
 });
 
 //Models
