@@ -83,6 +83,32 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
           .col-sm-4
             btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',1)")
               .glyphicon.glyphicon-plus.white-glyph
+              
+    .panel.panel-default
+    .panel-heading
+      h4.text-center 8 Ball
+    .panel-body
+      //red
+      .row
+        .col-sm-4
+          btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','score',-1)")
+            .glyphicon.glyphicon-minus.white-glyph
+        .col-sm-4
+          h4.text-center(ng-bind="redScore", ng-init="redScore=0")
+        .col-sm-4
+          btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','score',1)")
+            .glyphicon.glyphicon-plus.white-glyph
+
+      //blue
+      .row
+        .col-sm-4
+          btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',-1)")
+            .glyphicon.glyphicon-minus.white-glyph
+        .col-sm-4
+          h4.text-center(ng-bind="blueScore", ng-init="blueScore=0")
+        .col-sm-4
+          btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',1)")
+            .glyphicon.glyphicon-plus.white-glyph
 
 
 //
