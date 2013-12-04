@@ -8,69 +8,67 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
       .col-sm-5#topcolred
         .row
           .col-sm-4
-            p.teams 1540
-            p.teams 1114
-            p.teams 2471
+            p.teams(ng-bind="redTeams[0]")
+            p.teams(ng-bind="redTeams[1]")
+            p.teams(ng-bind="redTeams[2]")
           .col-sm-8
             .row
               p.pull-left.scoreVerify Points:
             .row
               .col-sm-3
-                button.btn.btn-default
-                  span.glyphicon.glyphicon-plus.text-center
-              .col-sm-6
-                h1.text-center 123
-              .col-sm-3
-                button.btn.btn-default
+                button.btn.btn-default(ng-click="editStats('red','score',-1)")
                   span.glyphicon.glyphicon-minus.text-center
+              .col-sm-6
+                h1.text-center(ng-bind="redScore")
+              .col-sm-3
+                button.btn.btn-default(ng-click="editStats('red','score',1)")
+                  span.glyphicon.glyphicon-plus.text-center
               
             .row
-
-                h2.pull-left Fouls:
+              h2.pull-left Fouls:
             .row
               .col-sm-3
-                button.btn.btn-default
-                  span.glyphicon.glyphicon-plus.text-center
-              .col-sm-6
-                h2.text-center 123
-              .col-sm-3
-                button.btn.btn-default
+                button.btn.btn-default(ng-click="editStats('red','fouls',-1)")
                   span.glyphicon.glyphicon-minus.text-center
+              .col-sm-6
+                h2.text-center(ng-bind="redFouls")
+              .col-sm-3
+                button.btn.btn-default(ng-click="editStats('red','fouls',1)")
+                  span.glyphicon.glyphicon-plus.text-center
 
 
       .col-sm-5.col-sm-offset-2#topcolblue
         .row
           .col-sm-4
-            p.teams 1540
-            p.teams 1114
-            p.teams 2471
+            p.teams(ng-bind="blueTeams[0]")
+            p.teams(ng-bind="blueTeams[1]")
+            p.teams(ng-bind="blueTeams[2]")
           .col-sm-8
             .row
               p.pull-left.scoreVerify Points:
             .row
               .col-sm-3
-                button.btn.btn-default
-                  span.glyphicon.glyphicon-plus.text-center
-              .col-sm-6
-                h1.text-center 123
-              .col-sm-3
-                button.btn.btn-default
+                button.btn.btn-default(ng-click="editStats('blue','score',-1)")
                   span.glyphicon.glyphicon-minus.text-center
+              .col-sm-6
+                h1.text-center(ng-bind="blueScore")
+              .col-sm-3
+                button.btn.btn-default(ng-click="editStats('blue','score',1)")
+                  span.glyphicon.glyphicon-plus.text-center
               
             .row
-
                 h2.pull-left Fouls:
             .row
               .col-sm-3
-                button.btn.btn-default
-                  span.glyphicon.glyphicon-plus.text-center
-              .col-sm-6
-                h2.text-center 123
-              .col-sm-3
-                button.btn.btn-default
+                button.btn.btn-default(ng-click="editStats('blue','fouls',-1)")
                   span.glyphicon.glyphicon-minus.text-center
+              .col-sm-6
+                h2.text-center(ng-bind="blueFouls")
+              .col-sm-3
+                button.btn.btn-default(ng-click="editStats('blue','fouls',1)")
+                  span.glyphicon.glyphicon-plus.text-center
   .panel-footer
-    a.btn.btn-lg.btn-primary#start Submit
+    a.btn.btn-lg.btn-primary#start(ng-click="submitMatch()") Submit
 
 //
   .jumbotron#outer  

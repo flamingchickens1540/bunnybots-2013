@@ -25,23 +25,23 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
         //red
         .row
           .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',-1)")
               .glyphicon.glyphicon-minus.white-glyph
           .col-sm-4
             h4.text-center(ng-bind="redFouls", ng-init="redFouls=0")
           .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',1)")
               .glyphicon.glyphicon-plus.white-glyph
 
         //blue
         .row
           .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',-1)")
               .glyphicon.glyphicon-minus.white-glyph
           .col-sm-4
             h4.text-center(ng-bind="blueFouls", ng-init="blueFouls=0")
           .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',1)")
               .glyphicon.glyphicon-plus.white-glyph
 
 
@@ -62,25 +62,26 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
       .panel-heading
         h4.text-center Scoring
       .panel-body
+        //red
         .row
           .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','score',-1)")
               .glyphicon.glyphicon-minus.white-glyph
           .col-sm-4
             h4.text-center(ng-bind="redScore", ng-init="redScore=0")
           .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','score',1)")
               .glyphicon.glyphicon-plus.white-glyph
 
         //blue
         .row
           .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',-1)")
               .glyphicon.glyphicon-minus.white-glyph
           .col-sm-4
             h4.text-center(ng-bind="blueScore", ng-init="blueScore=0")
           .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',1)")
               .glyphicon.glyphicon-plus.white-glyph
 
 

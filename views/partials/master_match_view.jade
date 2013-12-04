@@ -3,11 +3,11 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
 .well.well-lg.well-yellow
   .row
     .col-sm-offset-3.col-sm-6
-      p.score.text-center(ng-bind="timeLeft", ng-init="timeLeft = '2:30'; barWidth = {width: '0%'}")
+      p.score.text-center(ng-bind="timeLeft", ng-init="timeLeft = '2:30'")
   .row
     .col-sm-12
       .progress
-        .progress-bar(role="progressbar", ng-style="barWidth", ng-class="barColorClass")
+        .progress-bar(role="progressbar", ng-style="barWidth", ng-class="barColorClass", ng-init="barWidth = {width: '0%'}")
         //div(prog-bar) 
         //DOES NOT WORK YET, SEE main.js
 
@@ -24,11 +24,11 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
     .row
       .col-md-6
         .well.well-sm
-          p.text-center.score 19
+          p.text-center.score(ng-bind="redScore", ng-init="redScore=0")
       
       .col-md-6
         .well.well-sm
-          p.text-center.score 12
+          p.text-center.score(ng-bind="blueScore", ng-init="blueScore=0")
 
   .col-md-2#rightcolblue
     .row
@@ -43,5 +43,6 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
   .col-sm-12 
     .btn-group.btn-group-control
       button.btn.btn-lg.btn-primary#start(ng-click="startMatch(); matchRunning = !matchRunning;", ng-show="!matchRunning") Start
-      button.btn.btn-lg.btn-primary#pause(ng-click="pauseMatch();matchRunning = !matchRunning;", ng-show="matchRunning") Pause
-      button.btn.btn-lg.btn-primary#reset(ng-click="matchRunning = false; barWidth = {'width':'0%'}; start = null;") Reset
+      button.btn.btn-lg.btn-primary#pause(ng-click="pauseMatch(); matchRunning = !matchRunning;", ng-show="matchRunning") Pause
+      button.btn.btn-lg.btn-primary#reset(ng-click="matchRunning = false; barWidth = {'width':'0%'}; resetMatch()", ng-show="!matchComplete") Reset
+      button.btn.btn-lg.btn-primary#verify(ng-click="verifyMatch()", ng-show="matchComplete") Verify
