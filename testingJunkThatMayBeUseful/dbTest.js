@@ -1,4 +1,22 @@
 var db = require('../modules/db.js');
+
+db.Team.remove({}).exec(function(err) {
+			console.log('TEST: Removed all teams');
+		});
+
+db.Match.remove({}).exec(function(err) {
+	console.log('TEST: Removed all matches');
+});
+
+db.addTeam('1','a');
+db.addTeam('2','b');
+db.addTeam('3','c');
+db.addTeam('4','d');
+db.addTeam('5','e');
+db.addTeam('6','f');
+
+/*
+var db = require('../modules/db.js');
 var async = require('async');
 
 //db.connect();
@@ -18,7 +36,7 @@ async.series([
 
 	function populateTeams(continueSeries) {
 		/*POPULATE THE DATABASE W/ TEAMS*/
-		db.addTeam('1', 'a', function(err, team) {
+/*		db.addTeam('1', 'a', function(err, team) {
 			if (!err) console.log('created team '+ team.id +': '+ team.name);
 			else console.log('failed to create team 1');
 		});
@@ -67,4 +85,4 @@ async.series([
 	}
 ], function errCallback(err, results) {
 
-});
+});*/
