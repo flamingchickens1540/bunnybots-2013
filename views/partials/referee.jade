@@ -20,47 +20,7 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
     //fouls
     .panel.panel-default
       .panel-heading
-        h4.text-center Fouls
-      .panel-body
-        //red
-        .row
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',-1)")
-              .glyphicon.glyphicon-minus.white-glyph
-          .col-sm-4
-            h4.text-center(ng-bind="redFouls", ng-init="redFouls=0")
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',1)")
-              .glyphicon.glyphicon-plus.white-glyph
-
-        //blue
-        .row
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',-1)")
-              .glyphicon.glyphicon-minus.white-glyph
-          .col-sm-4
-            h4.text-center(ng-bind="blueFouls", ng-init="blueFouls=0")
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',1)")
-              .glyphicon.glyphicon-plus.white-glyph
-
-
-
-  //information and match timing
-  .col-sm-6
-    .row
-      .col-sm-10.col-sm-offset-1
-        p.score.text-center(ng-bind="timeLeft", ng-init="timeLeft='2:30'")
-
-    img.img-polaroid(src="http://www.placehold.it/550x300")
-
-
-
-  //teleop panel
-  .col-sm-3
-    .panel.panel-default
-      .panel-heading
-        h4.text-center Scoring
+        h4.text-center Penalties
       .panel-body
         //red
         .row
@@ -82,6 +42,98 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
             h4.text-center(ng-bind="blueScore", ng-init="blueScore=0")
           .col-sm-4
             btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',1)")
+              .glyphicon.glyphicon-plus.white-glyph
+
+  //information and match timing
+  .col-sm-6
+    .row
+      .col-sm-10.col-sm-offset-1
+        p.score.text-center(ng-bind="timeLeft", ng-init="timeLeft='2:30'")
+
+    // message box?
+
+
+
+  //teleop panel
+  .col-sm-3
+    .panel.panel-default
+      .panel-heading
+        h4.text-center Scoring
+      .panel-body
+
+        .row
+          p Foul
+
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',5)")
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="redFouls", ng-init="redFouls=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',-5)")
+              .glyphicon.glyphicon-plus.white-glyph
+
+        //blue
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',5)")
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="blueFouls", ng-init="blueFouls=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',-5)")
+              .glyphicon.glyphicon-plus.white-glyph
+
+
+        .row
+          p 8-Ball Controls
+          
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',8)")
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="redFouls", ng-init="redFouls=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',-8)")
+              .glyphicon.glyphicon-plus.white-glyph
+
+        //blue
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',8)")
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="blueFouls", ng-init="blueFouls=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',-8)")
+              .glyphicon.glyphicon-plus.white-glyph
+
+
+
+        .row
+          p Technical Foul
+          
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',10)")
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="redFouls", ng-init="redFouls=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',-10)")
+              .glyphicon.glyphicon-plus.white-glyph
+
+        //blue
+        .row
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',10)")
+              .glyphicon.glyphicon-minus.white-glyph
+          .col-sm-4
+            h4.text-center(ng-bind="blueFouls", ng-init="blueFouls=0")
+          .col-sm-4
+            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',-10)")
               .glyphicon.glyphicon-plus.white-glyph
 
 
