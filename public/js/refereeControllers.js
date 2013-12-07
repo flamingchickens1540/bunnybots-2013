@@ -78,17 +78,22 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
   		$scope.eightBallOutOfPlay = true;
   		//due to other balls on the field
   		if(!wasLegal) {
-  			$scope.emitRefereeInput(color, 'score', -8);
+  			$scope.emitRefereeInput(color, 'fouls', -8);
   		}
   		else {
   			//timeLeft in the match < 20 seconds - black balls legit (+8), else (-8)
 	  		var scoreChangeDueToEightBall = (timeFormat.formatTimerOutput($scope.timeLeft) <= 20000)? 8 : -8;
+	  		var type = 'score';
 	  		if(scoreChangeDueToEightBall === 8) {
 	  			//the bunny hole points go to the owner of the bunny hole
 	  			//only if it is a psitive score
 	  			color = $scope.holeColor || color;
 	  		}
-	  		$scope.emitRefereeInput(color, 'score', scoreChangeDueToEightBall);
+	  		else {
+	  			type = 'fouls';
+	  			color = color;
+	  		}
+	  		$scope.emitRefereeInput(color, type, scoreChangeDueToEightBall);
   		}
   	}
   };
