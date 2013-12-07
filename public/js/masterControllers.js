@@ -4,10 +4,13 @@ var master = angular.module('bunnybots2013.masterControllers', [
 ]);
 
 
-master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location, socket, helper, timeFormat, audio) {
+master.controller('MasterMatchViewCtrl', function ($scope, $location, socket, helper, timeFormat, audio) {
 
-  //$scope.redTeams = $rootScope.currentTeams.red;
-  //$scope.blueTeams = $rootScope.currentTeams.blue;
+  socket.emit('match:getMatchInfo');
+  socket.on('match:receiveMatchInfo', function(data) {
+    $scope.redTeams = data.redAlliance.teams;
+    $scope.blueTeams = data.blueAlliance.teams;
+  });
 
   $scope.redFouls = 0;
   $scope.blueFouls = 0;
@@ -19,10 +22,6 @@ master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location
   };
   $scope.verifyMatch = function() {
     socket.emit('match:end');
-
-    $rootScope.redAlliance = {score: $scope.redScore, fouls: $scope.redFouls};
-    $rootScope.blueAlliance = {score: $scope.blueScore, fouls: $scope.blueFouls};
-
     $location.path('/verify');
   };
   $scope.resetMatch = function() {
@@ -104,7 +103,10 @@ master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location
 
     if(data.type === 'fouls') {
       //a negative penalty means an extra foul, else a plus foul
+
+      console.log($scope[data.color+'Fouls']);
       $scope[data.color+'Fouls'] += (data.scoreChange < 0)? 1 : -1;
+      console.log(data.color, $scope[data.color+'Fouls']);
     }
   });
 });
@@ -140,19 +142,17 @@ master.controller('MasterMatchInputCtrl', function ($scope, $rootScope, $locatio
 });
 
 master.controller('MasterMatchVerifyCtrl', function ($scope, $rootScope, socket, $location) {
-  socket.emit('match:populate-verify');
-  socket.on('match:populate-verify', function(data) {
-    var red = data.redAlliance;
-    var blue = data.blueAlliance;
+  socket.emit('match:getMatchInfo');
+  socket.on('match:receiveMatchInfo', function(data) {
 
-    $scope.redTeams = red.teams;
-    $scope.blueTeams = blue.teams;
+    $scope.redTeams = data.redAlliance.teams;
+    $scope.blueTeams = data.blueAlliance.teams;
 
-    $scope.redScore = red.score || 0;
-    $scope.redFouls = red.fouls || 0;
+    $scope.redScore = data.redAlliance.score;
+    $scope.blueScore = data.blueAlliance.score;
 
-    $scope.blueScore = blue.score || 0;
-    $scope.blueFouls = blue.fouls || 0;
+    $scope.redFouls = data.redAlliance.fouls;
+    $scope.blueFouls = data.blueAlliance.fouls;
   });
 
   //allow for easy editing of flawed scores
@@ -167,10 +167,12 @@ master.controller('MasterMatchVerifyCtrl', function ($scope, $rootScope, socket,
 
   $scope.editStats = function editStats(color, type, num) {
     if((color === 'red' || color === 'blue') &&  typeof num === 'number') {
-      $scope[color+'Score'] += num;
-
-      if(type === 'fouls') {
-        $scope[color+'Fouls']++;
+      if(type === 'score') {
+        $scope[color+'Score'] += num;
+      }
+      else if(type === 'fouls') {
+        //negative scoreChange = positive foul count
+        $scope[color+'Fouls'] += num;
       }
 
       return true;

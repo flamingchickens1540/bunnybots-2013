@@ -29,32 +29,52 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 //Schemas
 var teamSchema = new mongoose.Schema({
-	id: String,
+  _id: String,
   name: String,
-	qualScore: {type: Number, default: 0}
+	qualScore: Number,
+  matches: [Number],
+  wins: Number,
+  ties: Number,
+  losses: Number
 });
 
 var matchSchema = new mongoose.Schema({
-	id: Number,
-	time: Number,
+	_id: Number,
+  complete: Boolean,
 
+  redAlliance: [String], //only three teams
 	redScore: Number,
 	redFouls: Number,
 
+  blueAlliance: [String], //only three teams
 	blueScore: Number,
 	blueFouls: Number
 });
 
+//returns who won
+matchSchema.methods.getWinner = function() {
+  if(this.redScore > this.blueScore) {
+    return 'red';
+  }
+  else if(this.blueScore > this.redScore) {
+    return 'blue';
+  }  
+  else {
+    return 'tie';
+  }
+};
 
-//CIRCULAR REFERENCES
-teamSchema.add({
-  matches: [{type: ObjectId, ref: 'Match'}]
-});
-
-matchSchema.add({
-  redTeams: [{type: ObjectId, ref: 'Team'}],
-  blueTeams: [{type: ObjectId, ref: 'Team'}]
-});
+matchSchema.methods.getTeamAlliance = function(teamId) {
+  if(_.contains(this.redTeams, teamId)) {
+    return 'red';
+  }
+  else if(_.contains(this.blueTeams, teamId)) {
+    return 'blue';
+  }
+  else {
+    return null;
+  }
+};
 
 //Models
 var Team = mongoose.model('Team', teamSchema);
@@ -74,38 +94,79 @@ var dbConnect = function dbConnect(dbName, callback) {
 
 dbConnect();
 
-//UPDATE FOR ALL CASES OF ARGUMENTS
-//forget fields, im getting whole objects from now on! SIMPLICITY!
-var dbGetTeam = function dbGetTeam(id, callback) {
-  var query = Team;
 
-  //db.get(TEAM_ID, FUNCTION) => Team object
-  if(typeof id === 'string' && _.isFunction(callback)) {
-    query = query.findOne({id:id}).populate('matches');
+// TEAMS
+var dbCreateTeam = function dbCreateTeam(id, name, callback) {
+  
+  console.log('db#createTeam',id, name);
+
+  //check id type
+  if(typeof id !== 'string') {
+    console.error('wrong arguments => id: '+ id +', name: '+ name +', callback: '+ callback +'.');
   }
-  else {
-    throw new Error('db#getTeam: need one Teamid string and one callback func');
+  //check id exists
+  if(!id) {
+    console.error('tried to create team without an id');
   }
-  query.exec(callback);
+  //check for a function callback
+  if(!_.isFunction(callback)) {
+    console.error('tried to create team without an id');
+    callback = function(e,t){console.log(e,t);};
+  }
+
+  var team = new Team;
+  //defaults
+  team._id = id;
+  team.name = name || 'Team '+ id;
+  team.matches = [];
+  team.qualScore = 0;
+  team.wins = 0;
+  team.ties = 0;
+  team.losses = 0;
+
+  team.save(callback);
+};
+
+var dbGetTeam = function dbGetTeam(id, callback) {
+
+  console.log('db#getTeam', id);
+
+  //check id type
+  if(typeof id !== 'string') {
+    console.error('wrong arguments => id: '+ id +', callback: '+ callback +'.');
+  }
+  //check id exists
+  if(!id) {
+    console.error('tried to create team without an id');
+  }
+  //check for a function callback
+  if(!_.isFunction(callback)) {
+    console.error('tried to create team without an id');
+    callback = function(e,t){console.log(e,t);};
+  }
+
+  Team.findOne({_id: id}).exec(callback);
 };
 
 //for multiple teams
 var dbGetTeams = function dbGetTeams(teamIds, callback) {
+    
+  console.log('db#getTeams',teamIds);
   var query = Team;
 
   //default is arrays (multiple teams)
   if(_.isArray(teamIds)) {
-    var queryRegExp = teamIds.join('|');
-    query = query.find({id:queryRegExp}).populate('matches'); //queries for all teams in db 
+    var queryRegExp = new RegExp(teamIds.join('|'));
+    query = query.find({_id:queryRegExp}); //queries for all teams in db 
   }
   //all teams
   else if(_.isFunction(teamIds)){
     callback = teamIds;
-    query = query.find({}).populate('matches');
+    query = query.find({});
   }
   //covers error cases
   else {
-    query = query.find({}).populate('matches');
+    query = query.find({});
     callback = function(err, team) {
       if(!err) 
         console.log(team);
@@ -114,54 +175,17 @@ var dbGetTeams = function dbGetTeams(teamIds, callback) {
     };
   }
 
-  query.exec(callback);
+  query.exec((callback || function(e,t){console.log(e,t);}));
 };
 
-//FIX TO USE NUMBER ID's
-var dbCreateTeam = function dbCreateTeam(id, name, callback) {
-  if(typeof id !== 'string') {
-    console.log('wrong arguments => id: '+ id +', name: '+ name +', callback: '+ callback +'.');
-  }
-
-  if(!id) {
-    console.log('tried to create team without an id');
-  }
-
-  //check whether it exists already first
-  dbGetTeam(id, function(err, team) {
-    if(!team) {
-      Team.create({id: id, name: (name || '[NO NAME]')}, function(err, team) {
-        if(!err) {
-          console.log('created team: '+team.id);
-        }
-        else {
-          console.log('failed to create team: '+team.id);
-        }
-
-        //if there is a callback
-        if(_.isFunction(callback)) {
-          callback(err, team); //may remove team arg for less data use
-        }
-        else {
-          console.log('db#add callback is not a function');
-        }
-
-        
-      });
-    }
-    else {
-      console.log('team '+ id +' already exists and can not be added')
-    }
-  });
-};
-
+//not rewritten
 //what if it isnt there?
 var dbRemoveTeam = function dbRemoveTeam(id, callback) {
   if(typeof id !== 'string') {
     console.log('DB REMOVE: id does not work');
   }
 
-  Team.findOneAndRemove({id: id}, function(err) {
+  Team.findOneAndRemove({_id: id}, function(err) {
     if(!err) {
       console.log('Team '+ id +' removed!')
     }
@@ -179,11 +203,13 @@ var dbRemoveTeam = function dbRemoveTeam(id, callback) {
   });
 };
 
+//not rewritten
 //IMPROVE CALLBACKS
 //dbUpdateTeam('1540', {name: 'Flaming Chickens'}, func())
 var dbUpdateTeam = function dbUpdateTeam(id, updateObj, callback) {
+  callback = _.isFunction(callback) || function(e,t) {console.log(e,t)};
   if(typeof id === 'string' && _.isObject(updateObj) && _.isFunction(callback)) {
-    Team.findOneAndUpdate({id:id}, updateObj, callback);
+    Team.findOneAndUpdate({_id:id}, updateObj, callback);
   }
   else {
     callback(new Error('not enough info to update team'), null);
@@ -191,83 +217,138 @@ var dbUpdateTeam = function dbUpdateTeam(id, updateObj, callback) {
 }
 
 
-
+//MATCHES
 var dbNewMatch = function dbNewMatch(id, matchCompetitors, callback) {
+  console.log('db#newMatch', id, matchCompetitors);
+
   if(typeof id !== 'number') { //|| !_.isObject(matchCompetitors) || !_.isFunction(callback)) {
-    throw new Error('DB#newMatch: wrong arguments');
+    console.error('DB#newMatch: wrong arguments');
   }
 
-  if(matchCompetitors.red.length !== 3 || matchCompetitors.blue.length !== 3) {
-    throw new Error('DB#newMatch: must have three teams on each alliance');
+  var redTeams = matchCompetitors.redAlliance;
+  var blueTeams = matchCompetitors.blueAlliance;
+  var allTeams = _.uniq(redTeams.concat(blueTeams));
+
+  console.log(allTeams,redTeams,blueTeams);
+
+  if(redTeams.length !== 3 && blueTeams.length !== 3 && allTeams.length !== 6) {
+    console.error('DB#newMatch: must have three unique teams on each alliance');
   }
 
-  //all teams
-  var teamIds = matchCompetitors.red.concat(matchCompetitors.blue);
-  var redTeams = [];
-  var blueTeams = [];
-  var teamsInMatch = [];
+  if(!_.isFunction(callback)) {
+    callback = function(e,t){console.log(e,t)};
+  }
+  
+  var match = new Match;
 
+  match._id = id;
+  match.redAlliance = redTeams;
+  match.blueAlliance = blueTeams;
+  match.blueScore = 0;
+  match.redScore = 0;
+  match.redFouls = 0;
+  match.blueFouls = 0;
+  match.complete = false;
 
-  Team.find({id:new RegExp(teamIds.join('|'))}).exec(function(err, teams) {
-    _.each(teams, function(team) {
-      //if it is in the list (ERR: two of the same team)
-      if(matchCompetitors.red.indexOf(team.id) !== -1) {
-        redTeams.push(team._id);
-      }
-      else {
-        blueTeams.push(team._id);
-      }
+  match.save(function(err, m) {
+    if(!err) {
+      var p = new mongoose.Promise;
+      p.then(function() {
+        console.log('created new match '+ m._id +' with red:'+ m.redAlliance +'and blue:'+ m.blueAlliance);
+        _.each(allTeams, function(teamId) {
+          console.log(teamId);
+          dbUpdateTeam(teamId, {$push:{matches:m._id}});
+        });
+      })
 
-      teamsInMatch.push(team);
-    });
-  })
-
-  .then(function() {
-    if((teams.length)!== 6) {
-      throw new Error('db#newMatch: NOT ENOUGH TEAMS FOR A MATCH');
-    }
-
-    console.log(teams);
-
-    Match.create({id: id, redTeams: redTeams, blueTeams: blueTeams}, function(err, match) {
-      _.each(teams, function(team) {
-        console.log(team);
-
-        //allows for population of team's matches
-        var updatedMatches = team.matches.push(match._id);
-        console.log('gets to this point');
-        dbUpdateTeam(team.id, {matches: updatedMatches}, callback);
+      .then(function() {
+        callback(null);
       });
-    });
+
+      p.fulfill();
+
+    }
+    else {
+      console.error(err, 'db#newMatch match creation failed');
+      callback(err);
+    }
   });
 };
 
-var dbUpdateMatch = function dbUpdateMatch(matchId, updateObj, callback) {
+//not rewritten
+var dbUpdateMatch = function dbUpdateMatch(match_id, updateObj, callback) {
   if(!(typeof id === 'number') && !_.isObject(updateObj)) {
     throw new Error('db#finishMatch: BAD ARGUMENTS');
   }
 
-  callback = callback || function(err) {};
+  callback = callback || function(e,m) {console.log(e,m)};
 
-  Match.findOneAndUpdate({id: match_id}, updateObj, callback);
+  Match.findOneAndUpdate({_id: match_id}, updateObj, callback);
 };
 
-var dbFinishMatch = function dbFinishMatch(id, matchStats, time, callback) {
+var dbFinishMatch = function dbFinishMatch(id, matchStats, callback) {
   if(!(typeof id === 'number') && !_.isObject(matchStats)) {
     throw new Error('db#finishMatch: BAD ARGUMENTS');
   }
 
-  callback = callback || function(err) {};
+  callback = callback || function(err) {if(err){console.log(err);}};
 
   dbUpdateMatch(id, {
-    redScore: matchStats.score.red, 
-    blueScore: matchStats.score.blue, 
-    redFouls: matchStats.fouls.red, 
-    blueFouls: matchStats.fouls.blue, 
-    time: time
-  }, callback);
+    redScore: matchStats.redScore, 
+    blueScore: matchStats.blueScore, 
+    redFouls: matchStats.redFouls, 
+    blueFouls: matchStats.blueFouls,
+    complete: true
+  }, function(err, match) {
+    if(!err) {
+
+      var errCallback = function(err) {
+        if(err) throw err;
+      };
+
+      var promise = new mongoose.Promise;
+
+      promise.then(function() {
+        var winner = match.getWinner();
+
+        if(winner === 'red' || winner === 'blue') {
+          var loser = (winner === 'red')? 'blue' : 'red';
+          console.log('================   WIN/LOSS   ================', winner, loser);
+
+          _.each(match[winner+'Alliance'], function(teamId) {
+            dbUpdateTeam(teamId, {$inc:{qualScore: 2, wins: 1}}/*, errCallback*/);
+          });
+          _.each(match[loser+'Alliance'], function(teamId) {
+            dbUpdateTeam(teamId, {$inc:{losses: 1}}/*, errCallback*/);
+          });
+        }
+        else if(winner === 'tie') {
+          console.log('================   TIE   ================');
+          _.each(match['redAlliance'], function(teamId) {
+            dbUpdateTeam(teamId, {$inc:{qualScore: 1, ties: 1}}/*, errCallback*/);
+          });
+          _.each(match['blueAlliance'], function(teamId) {
+            dbUpdateTeam(teamId, {$inc:{qualScore: 1, ties: 1}}/*, errCallback*/);
+          });
+        }
+        else {
+          console.error('db#finishMatch: There\'s an issue here.');
+        }
+      })
+
+      .then(function() {
+        callback(null);
+      });
+
+      promise.fulfill();
+    }
+    else {
+      callback(err)
+    }
+  });
 };
 
+//not rewritten
 var dbGetMatch = function dbGetMatch(matchId, callback) {
   var query = Match;
 
@@ -277,12 +358,12 @@ var dbGetMatch = function dbGetMatch(matchId, callback) {
 
   //db.get(MATCH_ID, FUNCTION) => Match object
   if(typeof matchId === 'number' && _.isFunction(callback)) {
-    query = query.findOne({id:matchId}).populate('redTeams blueTeams');
+    query = query.findOne({_id:matchId});
   }
   //covers db.get(FUNCTION) => returns all matches
   else if(_.isFunction(matchId)) {
     callback = matchId;
-    query = query.find({}).populate('redTeams blueTeams'); //queries for all matches in db 
+    query = query.find({}); //queries for all matches in db 
   }
   //covers error cases
   else {
@@ -293,6 +374,7 @@ var dbGetMatch = function dbGetMatch(matchId, callback) {
   query.exec(callback);
 };
 
+//not rewritten
 //ERR: potentially update the ids as well
 //remove from teams of match too
 var dbRemoveMatch = function dbRemoveMatch(id, callback) {
@@ -300,7 +382,7 @@ var dbRemoveMatch = function dbRemoveMatch(id, callback) {
     console.log('DB REMOVE: id does not work');
   }
   else {
-    Match.findOneAndRemove({id:id}, callback);
+    Match.findOneAndRemove({_id:id}, callback);
   }
 };
 

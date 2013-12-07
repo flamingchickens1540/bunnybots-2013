@@ -53,11 +53,10 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
   $scope.emitRefereeInput = function(color, type, num) {
     var editedStats = editStats(color, type, num);
     if(editedStats) {
-      var camelCased = type[0].toUpperCase() + type.slice(1)
 
       var dataObj = {
         color: color,
-        type: camelCased, //upper case Score or Fouls
+        type: type, //upper case Score or Fouls
         scoreChange: num
       };
 
