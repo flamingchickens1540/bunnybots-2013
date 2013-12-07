@@ -35,8 +35,6 @@ master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location
     pause: coded for in HTML
   */
 
-  var MATCH_LENGTH = 150000;
-
   var start;
   var percentCompleted = 0, timeLeft = '2:30';
   $scope.barColorClass = "progress-bar-success";
@@ -44,8 +42,8 @@ master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location
   $scope.bar = function bar(time) {
     start = start || time;
     
-    if($scope.matchRunning && time - start < MATCH_LENGTH) {
-      percentCompleted = 100*((time - start)/MATCH_LENGTH);
+    if($scope.matchRunning && time - start < timeFormat.MATCH_LENGTH) {
+      percentCompleted = 100*((time - start)/timeFormat.MATCH_LENGTH);
       
       //$apply allows for us to update the DOM as quickly as we need. Additional changes register quickly
       $scope.$apply(function() {
@@ -53,7 +51,7 @@ master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location
 
         //really an ng-style directive, but I only use it for this
         $scope.barWidth = {'width':percentCompleted+"%"};
-        $scope.timeLeft = timeFormat.formatMilliseconds(MATCH_LENGTH - (time - start));
+        $scope.timeLeft = timeFormat.formatMilliseconds(timeFormat.MATCH_LENGTH - (time - start));
 
         if(timeLeft !== $scope.timeLeft) {
           timeLeft = $scope.timeLeft;

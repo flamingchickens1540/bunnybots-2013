@@ -79,6 +79,8 @@ fact.factory('timeFormat', function() {
 	  return milliseconds;
 	};
 
+	timeFormat.MATCH_LENGTH = 150000;
+
 	return timeFormat;
 });
 
