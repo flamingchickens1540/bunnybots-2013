@@ -77,7 +77,7 @@ app.controller('HomePageCtrl', function ($scope) {
   
   $scope.hello = 'test';
 });
-app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket) {
+app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket, audio) {
   $scope.redFouls = 0;
   $scope.blueFouls = 0;
   $scope.barColorClass = "progress-bar-primary";
