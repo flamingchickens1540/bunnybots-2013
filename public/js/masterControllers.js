@@ -4,7 +4,7 @@ var master = angular.module('bunnybots2013.masterControllers', [
 ]);
 
 
-master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location, socket, helper, timeFormat) {
+master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location, socket, helper, timeFormat, audio) {
 
   //$scope.redTeams = $rootScope.currentTeams.red;
   //$scope.blueTeams = $rootScope.currentTeams.blue;
@@ -37,7 +37,7 @@ master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location
 
   var start;
   var percentCompleted = 0, timeLeft = '2:30';
-  $scope.barColorClass = "progress-bar-success";
+  $scope.barColorClass = "progress-bar-primary";
 
   $scope.bar = function bar(time) {
     start = start || time;
@@ -60,29 +60,35 @@ master.controller('MasterMatchViewCtrl', function ($scope, $rootScope, $location
           socket.emit('match:tick', {timeLeft: timeLeft, percentCompleted: percentCompleted});
           //console.log('emit match:tick event at '+ timeLeft);
         }
+  
+        
+        switch($scope.timeLeft) {
+          case '2:30':
+            $scope.barColorClass = "progress-bar-primary";
+            audio.startMatch.play();
+          break;
 
-        //sounds and color changes in bar
-        //for final 30 seconds
-        if($scope.timeLeft === '0:30') {
-          $scope.barColorClass = "progress-bar-warning";
-        }
+          case '2:15':
+            $scope.barColorClass = "progress-bar-success";
+            audio.endAuto.play();
+          break;
 
-        //add
-        // end of autonomous (sound, color change)
-        // last 10 seconds (red)
-        // sound for last 30 sec.
+          case '0:20':
+            $scope.barColorClass = "progress-bar-warning";
+            audio.startEndgame.play();
+          break;
 
-
-        if($scope.timeLeft === '0:00') {
-          //end match starts the verify button
-          $scope.matchComplete = true;
+          case '0:00':
+            $scope.barColorClass = "progress-bar-danger";
+            $scope.matchComplete = true;
+            audio.endMatch.play();
+          break;
         }
       });
         
-      //if($scope.matchRunning) {
+      //if($scope.matchRunning)
         //recursive progress bar animation call
         requestAnimationFrame($scope.bar);
-      //}
     }
 
     else {

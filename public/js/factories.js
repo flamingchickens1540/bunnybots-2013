@@ -84,3 +84,12 @@ fact.factory('timeFormat', function() {
 	return timeFormat;
 });
 
+fact.factory('audio', function() {
+	return {
+		startMatch: new Audio('/audio/start_of_match.wav'),
+		endAuto: new Audio('/audio/end_of_autonomous.wav'),
+		startEndgame: new Audio('/audio/start_of_endgame.wav'),
+		endMatch: new Audio('/audio/end_of_match.wav')
+	};
+});
+

@@ -80,14 +80,14 @@ app.controller('HomePageCtrl', function ($scope) {
 app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket) {
   $scope.redFouls = 0;
   $scope.blueFouls = 0;
-  $scope.barColorClass = "progress-bar-success";
+  $scope.barColorClass = "progress-bar-primary";
 
   socket.on('match:reset', function() {
     $scope.redScore = 0;
     $scope.blueScore = 0;
     $scope.timeLeft = '2:30';
     $scope.barWidth = {width: '0%'};
-    $scope.barColorClass = "progress-bar-success";
+    $scope.barColorClass = "progress-bar-primary";
   });
 
   socket.on('match:init', function(data) {
@@ -98,33 +98,39 @@ app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket) {
     $scope.timeLeft = '2:30';
     $scope.redScore = 0;
     $scope.blueScore = 0;
-    $scope.barColorClass = "progress-bar-success";
+    $scope.barColorClass = "progress-bar-primary";
   });
 
   //may need to update for lag and latency
   socket.on('match:tick', function(data) {
+    //causes angular to reevaluate after each tick
     $scope.$apply(function() {
-        
-
+      $scope.timeLeft = data.timeLeft;
       //really an ng-style directive, but I only use it for this
       $scope.barWidth = {'width':data.percentCompleted+"%"};
-      $scope.timeLeft = data.timeLeft;
 
-      //sounds and color changes in bar
-      //for final 30 seconds
-      if($scope.timeLeft === '0:30') {
-        $scope.barColorClass = "progress-bar-warning";
-      }
+      switch($scope.timeLeft) {
+        case '2:30':
+          $scope.barColorClass = "progress-bar-primary";
+          audio.startMatch.play();
+        break;
 
-      //add
-      // end of autonomous (sound, color change)
-      // last 10 seconds (red)
-      // sound for last 30 sec.
+        case '2:15':
+          $scope.barColorClass = "progress-bar-success";
+          audio.endAuto.play();
+        break;
 
-      //fixes issue of bar not completing
-      if($scope.timeLeft === '0:00') {
-        $scope.barWidth = {width: '100%'};
-      }
+        case '0:20':
+          $scope.barColorClass = "progress-bar-warning";
+          audio.startEndgame.play();
+        break;
+
+        case '0:00':
+          $scope.barColorClass = "progress-bar-danger";
+          $scope.matchComplete = true;
+          audio.endMatch.play();
+        break;
+      }    
     });
   });
 
