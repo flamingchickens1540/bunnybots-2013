@@ -133,7 +133,8 @@ app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket) {
     $scope[data.color+'Score'] += data.scoreChange;
 
     if(data.type === 'fouls') {
-      $scope[data.color+'Fouls']++;
+      //a negative penalty means an extra foul, else a plus foul
+      $scope[data.color+'Fouls'] += (data.scoreChange < 0)? 1 : -1;
     }
   });
 

@@ -24,7 +24,8 @@ refs.controller('RefereeCtrl', function ($scope, socket) {
       $scope[color+'Score'] += num;
 
       if(type === 'fouls') {
-        $scope[color+'Fouls']++;
+      	//negative scoreChange = positive foul count
+        $scope[color+'Fouls'] += (num < 0)? 1 : -1;
       }
 
       return true;
@@ -62,12 +63,13 @@ refs.controller('RefereeCtrl', function ($scope, socket) {
   });
 
   socket.on('referee:input', function(data) {
-
     //should only be one key value pair per signal
     $scope[data.color+'Score'] += data.scoreChange;
 
     if(data.type === 'fouls') {
-      $scope[data.color+'Fouls']++;
+      //a negative penalty means an extra foul, else a plus foul
+      $scope[data.color+'Fouls'] += (data.scoreChange < 0)? 1 : -1;
+      console.log($scope[data.color+'Fouls']);
     }
   });
 
