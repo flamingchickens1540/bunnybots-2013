@@ -1,10 +1,12 @@
 table.table.table-bordered.table-striped
 	tr
+		th Rank
 		th Team Number
 		th Team Name
 		th Qual Score
 		th Record (W-T-L)
 	tr(ng-repeat="team in teams")
+		td {{$index+1}}
 		td {{team._id}}
 		td {{team.name}}
 		td {{team.qualScore}}

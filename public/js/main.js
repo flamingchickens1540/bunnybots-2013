@@ -49,7 +49,7 @@ app.config(function ($routeProvider, $locationProvider) {
       controller: 'TeamRankingsCtrl'
     }).
 
-    when('/matches', {
+    when('/master_add_team', {
       templateUrl: 'partials/master_add_team',
       controller: 'MasterAddTeamCtrl'
     }).
@@ -272,7 +272,7 @@ app.controller('MasterAddTeamCtrl', function ($scope, socket) {
       $scope.team.name = "";
     }
     else {
-      alert('Team '+ team._id +' not created!');
+      alert('Team '+ $scope.team._id +' not created!');
     }
   });
 });
