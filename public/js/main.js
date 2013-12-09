@@ -50,8 +50,8 @@ app.config(function ($routeProvider, $locationProvider) {
     }).
 
     when('/matches', {
-      templateUrl: 'partials/match_history',
-      controller: 'MatchHistoryCtrl'
+      templateUrl: 'partials/master_add_team',
+      controller: 'MasterAddTeamCtrl'
     }).
     
     //default - turn off for development
@@ -258,8 +258,23 @@ app.controller('TeamRankingsCtrl', function ($scope, $http, socket) {
   });
 
 });
-app.controller('MatchHistoryCtrl', function ($scope) {
-  $scope.hello = 'test';
+app.controller('MasterAddTeamCtrl', function ($scope, socket) {
+  $scope.team = {};
+
+  $scope.createTeam = function() {
+    socket.emit('team:create', {id: $scope.team._id, name: $scope.team.name});
+  };  
+
+  socket.on('team:created', function(teamCreateSuccess) {
+    if(teamCreateSuccess === true) {
+      alert('Team '+ $scope.team._id +' successfully created!');
+      $scope.team._id = "";
+      $scope.team.name = "";
+    }
+    else {
+      alert('Team '+ team._id +' not created!');
+    }
+  });
 });
 
 

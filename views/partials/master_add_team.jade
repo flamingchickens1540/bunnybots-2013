@@ -1,0 +1,11 @@
+
+p.lead Add a Team to the Event
+
+h2 Number:
+input.input-lg(ng-model="team._id")
+
+h3 Name:
+input.input-lg(ng-model="team.name")
+
+br
+btn.btn.btn-lg.btn-success(ng-click="createTeam()", style="margin-top:20px;") Submit

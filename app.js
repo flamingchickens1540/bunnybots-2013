@@ -211,6 +211,18 @@ io.sockets.on('connection', function(socket) {
       currentMatch[data.color+'Alliance'].fouls += (data.scoreChange < 0)? 1 : -1;
     }
   });
+
+  //no checks on whether it exists
+  socket.on('team:create', function(data) {
+    db.addTeam(data.id, data.name, function(err, team) {
+      if(!err) {
+        socket.emit('team:created', true);
+      }
+      else {
+        socket.emit('team:created', false);
+      }
+    });
+  });
 });
 
 
