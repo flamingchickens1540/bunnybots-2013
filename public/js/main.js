@@ -16,7 +16,7 @@ app.config(function ($routeProvider, $locationProvider) {
 
     when('/', {
       templateUrl: 'partials/home',
-      controller: 'PublicMatchViewCtrl'
+      controller: 'AppCtrl'
     }).
 
     when('/match_view', {
@@ -56,7 +56,7 @@ app.config(function ($routeProvider, $locationProvider) {
     
     //default - turn off for development
     otherwise({
-      redirectTo: '/home' //or a 404 page?
+      redirectTo: '/' //or a 404 page?
     });
   $locationProvider.html5Mode(true);
 });
@@ -74,7 +74,6 @@ app.controller('AppCtrl', function ($scope, $rootScope, socket) {
   });
 });
 app.controller('HomePageCtrl', function ($scope) {
-  
   $scope.hello = 'test';
 });
 app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket, audio) {
@@ -256,7 +255,6 @@ app.controller('TeamRankingsCtrl', function ($scope, $http, socket) {
   socket.on('match:recorded', function(data) {
     location.reload();
   });
-
 });
 app.controller('MasterAddTeamCtrl', function ($scope, socket) {
   $scope.team = {};
