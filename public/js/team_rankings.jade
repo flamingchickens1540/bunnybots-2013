@@ -1,11 +1,11 @@
-table.table.table-bordered.table-striped
+table
 	tr
-		th Team Number
+		th Number
 		th Team Name
 		th Qual Score
 		th Record (W-T-L)
 	tr(ng-repeat="team in teams")
-		td {{team._id}}
+		td {{team._id}} {{team.id}}
 		td {{team.name}}
 		td {{team.qualScore}}
-		td {{team.wins}} - {{team.ties}} - {{team.losses}}
+		td {{team.wins+'-'+team.ties+'-'team.losses}}

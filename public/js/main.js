@@ -154,12 +154,116 @@ app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket, audi
     $scope.blueScore = data.blueScore;
   });
 });
-app.controller('TeamRankingsCtrl', function ($scope) {
-  $scope.hello = 'test';
+app.controller('TeamRankingsCtrl', function ($scope, $http, socket) {
+  $scope.teams = [];
+  
+    var isSorted = function(teams) {
+      var now = teams[i];
+      var next = teams[i+1];
+      var sort = true;
+
+      for (var i = 0; i < teams.length; i++) {
+        now = teams[i];
+        next = teams[i+1];
+
+        if(next) {
+          if(now.wins < next.wins) {
+            sort = false;
+          }
+          else if(now.wins === next.wins) {
+            if(now.ties < next.ties) {
+              sort = false;
+            }
+            else if(now.ties === next.ties) {
+              if(now.losses > next.losses) {
+                sort = false;
+              }
+            }
+            else {
+              //keep how it is
+            }
+          }
+          else {
+            //keep how it is
+          }
+        }
+
+        return sort;
+      }
+    };
+
+    //BUBBLE SORT IS BAD!!!
+  $scope.rank = function(t) {
+    var now = null;
+    var next = null;
+    var temp = null;
+
+    var sorted = false;
+    while(!sorted) {
+      for (var i = 0; i < t.length; i++) {
+        now = t[i];
+        next = t[i+1];
+
+        if(next) {
+          if(now.wins < next.wins) {
+            temp = now;
+            t[i] = next;
+            t[i+1] = now;
+          }
+          else if(now.wins === next.wins) {
+            if(now.ties < next.ties) {
+              temp = now;
+              t[i] = next;
+              t[i+1] = now;
+            }
+            else if(now.ties === next.ties) {
+              if(now.losses > next.losses) {
+                temp = now;
+                t[i] = next;
+                t[i+1] = now;
+              }
+            }
+            else {
+              //keep how it is
+            }
+          }
+          else {
+            //keep how it is
+          }
+        }
+      }
+
+      sorted = isSorted(t);
+    }
+
+    return t;
+  };
+
+  $http({
+    method: 'GET',
+    url: '/resources/teams'
+  })
+
+  .success(function(data, status) {
+    if(status === 200) {
+      $scope.teams = $scope.rank(data);
+    }
+    else {
+      console.error('NO DATA, BAD URL');
+    }
+  });
+
+  socket.on('match:recorded', function(data) {
+    location.reload();
+  });
+
 });
 app.controller('MatchHistoryCtrl', function ($scope) {
   $scope.hello = 'test';
 });
+
+
+
 
 //FOR THE TIMER
 // DOES NOT WORK. SCREW THIS FOR NOW. learn later.
@@ -179,3 +283,11 @@ app.controller('MatchHistoryCtrl', function ($scope) {
     link: function(scope, elements, attrs) {}
   };
 });*/
+/*
+var conditions = {}, update = { wins: Math.floor(Math.random()*5), ties: Math.floor(Math.random()*5), losses: Math.floor(Math.random()*5)}, options = { multi: true };
+
+Model.update(conditions, update, options, callback);
+
+function callback (err, numAffected) {
+  // numAffected is the number of updated documents
+})*/
