@@ -61,13 +61,8 @@ app.config(function ($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 });
 
-app.controller('AppCtrl', function ($scope, $rootScope, socket) {
+app.controller('AppCtrl', function ($scope, socket) {
   //update by master only
-
-  //try not to use rootScope
-  //$rootScope.currentTeams = {red:[],blue:[]};
-  //$rootScope.redAlliance = {};
-  //$rootScope.blueAlliance = {};
 
   socket.on('connected', function(data) {
     console.log('LOG: socket.io connected to server.');
@@ -76,7 +71,7 @@ app.controller('AppCtrl', function ($scope, $rootScope, socket) {
 app.controller('HomePageCtrl', function ($scope) {
   $scope.hello = 'test';
 });
-app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket, audio) {
+app.controller('PublicMatchViewCtrl', function ($scope, socket, audio) {
   $scope.redFouls = 0;
   $scope.blueFouls = 0;
   $scope.barColorClass = "progress-bar-primary";
@@ -139,7 +134,7 @@ app.controller('PublicMatchViewCtrl', function ($scope, $rootScope, socket, audi
 
     if(data.type === 'fouls') {
       //a negative penalty means an extra foul, else a plus foul
-      $scope[data.color+'Fouls'] += (data.scoreChange < 0)? 1 : -1;
+      $scope[data.color+'Fouls'] += data.scoreChange;
     }
   });
 

@@ -111,7 +111,7 @@ master.controller('MasterMatchViewCtrl', function ($scope, $location, socket, he
   });
 });
 
-master.controller('MasterMatchInputCtrl', function ($scope, $rootScope, $location, socket, helper) {
+master.controller('MasterMatchInputCtrl', function ($scope, $location, socket, helper) {
   $scope.redTeams = [];
   $scope.blueTeams = [];
 
@@ -129,9 +129,6 @@ master.controller('MasterMatchInputCtrl', function ($scope, $rootScope, $locatio
   };
 
   socket.on('match:confirm-init', function(data) {
-    //reactive equaling
-    //$rootScope.currentTeams.red = $scope.redTeams;
-    //$rootScope.currentTeams.blue = $scope.blueTeams;
     $location.path('/master');
   });
 
@@ -141,7 +138,7 @@ master.controller('MasterMatchInputCtrl', function ($scope, $rootScope, $locatio
   });
 });
 
-master.controller('MasterMatchVerifyCtrl', function ($scope, $rootScope, socket, $location) {
+master.controller('MasterMatchVerifyCtrl', function ($scope, socket, $location) {
   socket.emit('match:getMatchInfo');
   socket.on('match:receiveMatchInfo', function(data) {
 
@@ -154,16 +151,6 @@ master.controller('MasterMatchVerifyCtrl', function ($scope, $rootScope, socket,
     $scope.redFouls = data.redAlliance.fouls;
     $scope.blueFouls = data.blueAlliance.fouls;
   });
-
-  //allow for easy editing of flawed scores
-  /*$scope.redTeams = $rootScope.currentTeams.red;
-  $scope.blueTeams = $rootScope.currentTeams.blue;
-
-  $scope.redScore = $rootScope.redAlliance.score || 0;
-  $scope.redFouls = $rootScope.redAlliance.fouls || 0;
-
-  $scope.blueScore = $rootScope.blueAlliance.score || 0;
-  $scope.blueFouls = $rootScope.blueAlliance.fouls || 0;*/
 
   $scope.editStats = function editStats(color, type, num) {
     if((color === 'red' || color === 'blue') &&  typeof num === 'number') {
