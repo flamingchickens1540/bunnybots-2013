@@ -1,6 +1,6 @@
 link(rel='stylesheet', type='text/css', href='/css/style.css')
 
-.well.well-lg.well-yellow
+.well.well-lg
   .row
     .col-sm-offset-3.col-sm-6
       p.score.text-center(ng-bind="timeLeft", ng-init="timeLeft = '2:30'")
@@ -8,8 +8,6 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
     .col-sm-12
       .progress
         .progress-bar(role="progressbar", ng-style="barWidth", ng-class="barColorClass", ng-init="barWidth = {width: '0%'}")
-        //div(prog-bar) 
-        //DOES NOT WORK YET, SEE main.js
 
 .row
   .col-md-2#leftcolred

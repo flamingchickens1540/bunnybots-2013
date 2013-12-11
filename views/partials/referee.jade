@@ -1,10 +1,11 @@
 link(rel='stylesheet', type='text/css', href='/css/style.css')
+meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
 
 h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
 
 .row
   //autonomous panel
-  .col-sm-4
+  .col-sm-6
     .panel.panel-default
       .panel-heading
         h4.text-center Autonomous
@@ -12,146 +13,114 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
         p.text-center Hole Color
         .row
           .btn-group.btn-group-lg.btn-group-justified
-            btn.btn.btn-default.btn-danger(ng-click="changeHoleColor('red')") Red
-            btn.btn.btn-default(ng-click="changeHoleColor()") None
-            btn.btn.btn-default.btn-primary(ng-click="changeHoleColor('blue')") Blue
+            btn.btn.btn-group-justified.btn-default.btn-danger(ng-click="changeHoleColor('red')") Red
+            btn.btn.btn-group-justified.btn-default(ng-click="changeHoleColor()") None
+            btn.btn.btn-group-justified.btn-default.btn-primary(ng-click="changeHoleColor('blue')") Blue
 
 
-    //fouls
+    //penalties
     .panel.panel-default
       .panel-heading
         h4.text-center Scoring
       .panel-body
         //red
         .row
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','score',-1)")
+          .col-sm-5
+            btn.btn-group-justified.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','score',-1)")
               .glyphicon.glyphicon-minus.white-glyph
-          .col-sm-4
+          .col-sm-2
             h4.text-center(ng-bind="redScore", ng-init="redScore=0")
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger.pull-right(ng-click="emitRefereeInput('red','score',1)")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-danger.pull-right(ng-click="emitRefereeInput('red','score',1)")
               .glyphicon.glyphicon-plus.white-glyph
 
         //blue
         .row
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',-1)")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',-1)")
               .glyphicon.glyphicon-minus.white-glyph
-          .col-sm-4
+          .col-sm-2
             h4.text-center(ng-bind="blueScore", ng-init="blueScore=0")
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary.pull-right(ng-click="emitRefereeInput('blue','score',1)")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-primary.pull-right(ng-click="emitRefereeInput('blue','score',1)")
               .glyphicon.glyphicon-plus.white-glyph
 
+    .panel.panel-default
+      .panel-heading
+        h4.text-center 8-Ball
+      .panel-body
+        .row
+          .col-sm-6
+            btn.btn.btn-group-justified.btn-lg.btn-danger.btn-default(ng-click="eightBallScored('red', true)") Good 8-Ball
+          .col-sm-6
+            btn.btn.btn-group-justified.btn-lg.btn-primary.btn-default(ng-click="eightBallScored('blue', true)") Good 8-Ball
+        .row
+          .col-sm-6
+            btn.btn.btn-group-justified.btn-lg.btn-danger.btn-default(ng-click="eightBallScored('red', false)") Bad 8-Ball
+          .col-sm-6
+            btn.btn.btn-group-justified.btn-lg.btn-primary.btn-default(ng-click="eightBallScored('blue', false)") Bad 8-Ball
+
   //information and match timing
-  .col-sm-4
+  .col-sm-6
     .row
       .col-sm-10.col-sm-offset-1
         p.score.text-center(ng-bind="timeLeft", ng-init="timeLeft='2:30'")
 
-    // message box?
 
-
-
-  //teleop panel
-  .col-sm-4
     .panel.panel-default
       .panel-heading
         h4.text-center Penalties
       .panel-body
 
         .row
-          p Foul
+          p Normal Penalty
 
         .row
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',5)")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',5)")
               .glyphicon.glyphicon-minus.white-glyph
-          .col-sm-4
-            h4.text-center(ng-bind="redFouls", ng-init="redFouls=0")
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger.pull-right(ng-click="emitRefereeInput('red','fouls',-5)")
+          .col-sm-2
+            h4.text-center(ng-bind="redPenalties", ng-init="redPenalties=0")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-danger.pull-right(ng-click="emitRefereeInput('red','fouls',-5)")
               .glyphicon.glyphicon-plus.white-glyph
 
         //blue
         .row
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',5)")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',5)")
               .glyphicon.glyphicon-minus.white-glyph
-          .col-sm-4
-            h4.text-center(ng-bind="blueFouls", ng-init="blueFouls=0")
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary.pull-right(ng-click="emitRefereeInput('blue','fouls',-5)")
+          .col-sm-2
+            h4.text-center(ng-bind="bluePenalties", ng-init="bluePenalties=0")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-primary.pull-right(ng-click="emitRefereeInput('blue','fouls',-5)")
               .glyphicon.glyphicon-plus.white-glyph
 
 
 
         .row
-          p Technical Foul
+          p Technical Penalty
           
         .row
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',10)")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','fouls',10)")
               .glyphicon.glyphicon-minus.white-glyph
-          .col-sm-4
-            h4.text-center(ng-bind="redFouls", ng-init="redFouls=0")
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-danger.pull-right(ng-click="emitRefereeInput('red','fouls',-10)")
+          .col-sm-2
+            h4.text-center(ng-bind="redTechnicals", ng-init="redTechnicals=0")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-danger.pull-right(ng-click="emitRefereeInput('red','fouls',-10)")
               .glyphicon.glyphicon-plus.white-glyph
 
         //blue
         .row
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',10)")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','fouls',10)")
               .glyphicon.glyphicon-minus.white-glyph
-          .col-sm-4
-            h4.text-center(ng-bind="blueFouls", ng-init="blueFouls=0")
-          .col-sm-4
-            btn.btn.btn-lg.btn-default.btn-primary.pull-right(ng-click="emitRefereeInput('blue','fouls',-10)")
+          .col-sm-2
+            h4.text-center(ng-bind="blueTechnicals", ng-init="blueTechnicals=0")
+          .col-sm-5
+            btn.btn.btn-group-justified.btn-lg.btn-default.btn-primary.pull-right(ng-click="emitRefereeInput('blue','fouls',-10)")
               .glyphicon.glyphicon-plus.white-glyph
-              
-    .panel.panel-default
-    .panel-heading
-      h4.text-center 8 Ball
-    .panel-body
-      //red
-      .row
-        .col-sm-4
-          btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','score',-1)")
-            .glyphicon.glyphicon-minus.white-glyph
-        .col-sm-4
-          h4.text-center(ng-bind="redScore", ng-init="redScore=0")
-        .col-sm-4
-          btn.btn.btn-lg.btn-default.btn-danger(ng-click="emitRefereeInput('red','score',1)")
-            .glyphicon.glyphicon-plus.white-glyph
-
-      //blue
-      .row
-        .col-sm-4
-          btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',-1)")
-            .glyphicon.glyphicon-minus.white-glyph
-        .col-sm-4
-          h4.text-center(ng-bind="blueScore", ng-init="blueScore=0")
-        .col-sm-4
-          btn.btn.btn-lg.btn-default.btn-primary(ng-click="emitRefereeInput('blue','score',1)")
-            .glyphicon.glyphicon-plus.white-glyph
-
-
-    .panel.panel-default
-      .panel-heading
-        h4.text-center 8-Ball (ignore timing)
-      .panel-body
-        .row
-          .col-sm-6
-            btn.btn.btn-lg.btn-danger.btn-default(ng-click="eightBallScored('red', true)") Good 8-Ball
-          .col-sm-6
-            btn.btn.btn-lg.btn-primary.btn-default(ng-click="eightBallScored('blue', true)") Good 8-Ball
-        .row
-          .col-sm-6
-            btn.btn.btn-lg.btn-danger.btn-default(ng-click="eightBallScored('red', false)") Bad 8-Ball
-          .col-sm-6
-            btn.btn.btn-lg.btn-primary.btn-default(ng-click="eightBallScored('blue', false)") Bad 8-Ball
 
 
 

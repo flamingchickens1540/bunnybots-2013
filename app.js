@@ -208,7 +208,7 @@ io.sockets.on('connection', function(socket) {
     currentMatch[data.color+'Alliance'].score += data.scoreChange;
     if(data.type === 'fouls') {
       //negative scoreChange = positive foul count
-      currentMatch[data.color+'Alliance'].fouls += (data.scoreChange < 0)? 1 : -1;
+      currentMatch[data.color+'Alliance'].fouls -= data.scoreChange;
     }
   });
 

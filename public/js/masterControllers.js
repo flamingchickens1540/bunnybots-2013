@@ -102,16 +102,14 @@ master.controller('MasterMatchViewCtrl', function ($scope, $location, socket, he
     $scope[data.color+'Score'] += data.scoreChange;
 
     if(data.type === 'fouls') {
-      //a negative penalty means an extra foul, else a plus foul
-
-      console.log($scope[data.color+'Fouls']);
-      $scope[data.color+'Fouls'] += (data.scoreChange < 0)? 1 : -1;
-      console.log(data.color, $scope[data.color+'Fouls']);
+      //a negative score means a positive penalty
+      $scope[data.color+'Fouls'] -= data.scoreChange;
     }
   });
 });
 
-master.controller('MasterMatchInputCtrl', function ($scope, $location, socket, helper) {
+master.controller('MasterMatchInputCtrl', function ($scope,
+ $location, socket, helper) {
   $scope.redTeams = [];
   $scope.blueTeams = [];
 

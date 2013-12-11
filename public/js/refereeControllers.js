@@ -38,6 +38,14 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
       $scope[color+'Score'] += num;
 
       if(type === 'fouls') {
+        //two types of fouls
+        if(Math.abs(num) === 5) { //then it is a normal penalty
+          $scope[color+'Penalties'] -= num;
+        }
+        else if(Math.abs(num) === 10) {
+          $scope[color+'Technicals'] -= num;
+        }
+
       	//negative scoreChange = positive foul count
         $scope[color+'Fouls'] += (num < 0)? 1 : -1;
       }
@@ -109,8 +117,16 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
     $scope[data.color+'Score'] += data.scoreChange;
 
     if(data.type === 'fouls') {
-      //a negative penalty means an extra foul, else a plus foul
-      $scope[data.color+'Fouls'] += (data.scoreChange < 0)? 1 : -1;
+      //two types of fouls
+      if(Math.abs(data.scoreChange) === 5 || Math.abs(data.scoreChange) === 8) { //then it is a normal penalty
+        $scope[data.color+'Penalties'] -= data.scoreChange;
+      }
+      else if(Math.abs(data.scoreChange) === 10) {
+        $scope[data.color+'Technicals'] -= data.scoreChange;
+      }
+
+      //a negative score means a positive penalty
+      $scope[data.color+'Fouls'] -= data.scoreChange;
     }
   });
 
