@@ -151,86 +151,9 @@ app.controller('PublicMatchViewCtrl', function ($scope, socket, audio) {
 app.controller('TeamRankingsCtrl', function ($scope, $http, socket) {
   $scope.teams = [];
   
-    var isSorted = function(teams) {
-      var now = teams[i];
-      var next = teams[i+1];
-      var sort = true;
-
-      for (var i = 0; i < teams.length; i++) {
-        now = teams[i];
-        next = teams[i+1];
-
-        if(next) {
-          if(now.wins < next.wins) {
-            sort = false;
-          }
-          else if(now.wins === next.wins) {
-            if(now.ties < next.ties) {
-              sort = false;
-            }
-            else if(now.ties === next.ties) {
-              if(now.losses > next.losses) {
-                sort = false;
-              }
-            }
-            else {
-              //keep how it is
-            }
-          }
-          else {
-            //keep how it is
-          }
-        }
-
-        return sort;
-      }
-    };
-
     //BUBBLE SORT IS BAD!!!
-  $scope.rank = function(t) {
-    var now = null;
-    var next = null;
-    var temp = null;
-
-    var sorted = false;
-    while(!sorted) {
-      for (var i = 0; i < t.length; i++) {
-        now = t[i];
-        next = t[i+1];
-
-        if(next) {
-          if(now.wins < next.wins) {
-            temp = now;
-            t[i] = next;
-            t[i+1] = now;
-          }
-          else if(now.wins === next.wins) {
-            if(now.ties < next.ties) {
-              temp = now;
-              t[i] = next;
-              t[i+1] = now;
-            }
-            else if(now.ties === next.ties) {
-              if(now.losses > next.losses) {
-                temp = now;
-                t[i] = next;
-                t[i+1] = now;
-              }
-            }
-            else {
-              //keep how it is
-            }
-          }
-          else {
-            //keep how it is
-          }
-        }
-      }
-
-      sorted = isSorted(t);
-    }
-
-    return t;
+  $scope.rank = function(teams) {
+    return teams.sort(function(team) { return team.qualScore; }).reverse();
   };
 
   $http({

@@ -315,11 +315,14 @@ var dbFinishMatch = function dbFinishMatch(id, matchStats, callback) {
           var loser = (winner === 'red')? 'blue' : 'red';
           console.log('================   WIN/LOSS   ================', winner, loser);
 
+          var winQualScore = match[winner+'Score'] + Math.round(0.5 * match[loser+'Score']);
+          var loseQualScore = match[loser+'Score'];
+
           _.each(match[winner+'Alliance'], function(teamId) {
-            dbUpdateTeam(teamId, {$inc:{qualScore: 2, wins: 1}}/*, errCallback*/);
+            dbUpdateTeam(teamId, {$inc:{qualScore: winQualScore, wins: 1}}/*, errCallback*/);
           });
           _.each(match[loser+'Alliance'], function(teamId) {
-            dbUpdateTeam(teamId, {$inc:{losses: 1}}/*, errCallback*/);
+            dbUpdateTeam(teamId, {$inc:{qualScore: loseQualScore, losses: 1}}/*, errCallback*/);
           });
         }
         else if(winner === 'tie') {
