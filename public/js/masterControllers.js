@@ -17,6 +17,7 @@ master.controller('MasterMatchViewCtrl', function ($scope, $location, socket, he
 
   $scope.startMatch = function() {
     if(!$scope.matchRunning) {
+      socket.emit('match:tick', {timeLeft: '2:30', percentCompleted: 0});
       requestAnimationFrame($scope.bar);
     }
   };

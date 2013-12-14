@@ -318,6 +318,8 @@ var dbFinishMatch = function dbFinishMatch(id, matchStats, callback) {
           var winQualScore = match[winner+'Score'] + Math.round(0.5 * match[loser+'Score']);
           var loseQualScore = match[loser+'Score'];
 
+          console.log(winQualScore, loseQualScore);
+
           _.each(match[winner+'Alliance'], function(teamId) {
             dbUpdateTeam(teamId, {$inc:{qualScore: winQualScore, wins: 1}}/*, errCallback*/);
           });
@@ -327,11 +329,17 @@ var dbFinishMatch = function dbFinishMatch(id, matchStats, callback) {
         }
         else if(winner === 'tie') {
           console.log('================   TIE   ================');
+
+          var redQualScore = match.redScore;
+          var blueQualScore = match.blueScore;
+
+          console.log(redQualScore, blueQualScore);
+
           _.each(match['redAlliance'], function(teamId) {
-            dbUpdateTeam(teamId, {$inc:{qualScore: 1, ties: 1}}/*, errCallback*/);
+            dbUpdateTeam(teamId, {$inc:{qualScore: redQualScore, ties: 1}}/*, errCallback*/);
           });
           _.each(match['blueAlliance'], function(teamId) {
-            dbUpdateTeam(teamId, {$inc:{qualScore: 1, ties: 1}}/*, errCallback*/);
+            dbUpdateTeam(teamId, {$inc:{qualScore: blueQualScore, ties: 1}}/*, errCallback*/);
           });
         }
         else {

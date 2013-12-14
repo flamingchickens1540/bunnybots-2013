@@ -5,7 +5,7 @@ table.table.table-bordered.table-striped
 		th Team Name
 		th Qual Score
 		th Record (W-T-L)
-	tr(ng-repeat="team in teams")
+	tr(ng-repeat="team in teams | orderBy:'-qualScore':false")
 		td {{$index+1}}
 		td {{team._id}}
 		td {{team.name}}

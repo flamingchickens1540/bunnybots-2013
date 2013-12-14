@@ -150,29 +150,30 @@ app.controller('PublicMatchViewCtrl', function ($scope, socket, audio) {
 });
 app.controller('TeamRankingsCtrl', function ($scope, $http, socket) {
   $scope.teams = [];
-  
-    //BUBBLE SORT IS BAD!!!
-  $scope.rank = function(teams) {
-    return teams.sort(function(team) { return team.qualScore; }).reverse();
+
+  var updateResults = function() {
+    $http({
+      method: 'GET',
+      url: '/resources/teams'
+    })
+
+    .success(function(data, status) {
+      if(status === 200) {
+        $scope.teams = data;
+      }
+      else {
+        console.error('NO DATA, BAD URL');
+      }
+    });
   };
 
-  $http({
-    method: 'GET',
-    url: '/resources/teams'
-  })
-
-  .success(function(data, status) {
-    if(status === 200) {
-      $scope.teams = $scope.rank(data);
-    }
-    else {
-      console.error('NO DATA, BAD URL');
-    }
-  });
-
   socket.on('match:recorded', function(data) {
-    location.reload();
+    updateResults();
+    //location.reload();
   });
+
+  //initial page load
+  updateResults();
 });
 app.controller('MasterAddTeamCtrl', function ($scope, socket) {
   $scope.team = {};
