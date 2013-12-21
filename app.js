@@ -111,40 +111,58 @@ io.sockets.on('connection', function(socket) {
       blueAlliance: data.blue
     };
 
-    db.createMatch(++numMatches, saveData, function(err) {
-      if(!err) {
-        console.log('emitting');
-        socket.broadcast.emit('match:init', {red: data.red, blue: data.blue});
-        //allows master to move to match page
-        socket.emit('match:confirm-init'); 
+    if(!currentMatch.matchRunning) {
+      var promise = new db.Promise;
 
-        //update model
-        currentMatch.redAlliance = {
-          teams: data.red,
-          score: 0,
-          fouls: 0
-        };
-        currentMatch.blueAlliance = {
-          teams: data.blue,
-          score: 0,
-          fouls: 0
-        };
-        currentMatch.matchRunning = true;
-      }
-      else {
-        console.error('error with saving initialized match and teams');
-        socket.emit('match:error-init', {err: err});
-      }
-    });
+      promise.then(function() {
+        //remove incomplete matches
+        db.Match.remove({complete: false}, function(err) {
+          if(err) {
+            throw new Error('does not remove incomplete matches');
+          }
+        });
+      })
+      
+      .then(function() {
+        db.createMatch(++numMatches, saveData, function(err) {
+          if(!err) {
+            console.log('emitting');
+            socket.broadcast.emit('match:init', {red: data.red, blue: data.blue});
+            //allows master to move to match page
+            socket.emit('match:confirm-init'); 
+
+            //update model
+            currentMatch.redAlliance = {
+              teams: data.red,
+              score: 0,
+              fouls: 0
+            };
+            currentMatch.blueAlliance = {
+              teams: data.blue,
+              score: 0,
+              fouls: 0
+            };
+          }
+          else {
+            console.error('error with saving initialized match and teams');
+            socket.emit('match:error-init', {err: err});
+          }
+        });
+      });
+
+      promise.fulfill();
+    }
   });
 
   socket.on('match:getMatchInfo', function() {
-    socket.emit('match:receiveMatchInfo', {redAlliance: currentMatch.redAlliance, blueAlliance: currentMatch.blueAlliance});
-  })
+    socket.emit('match:receiveMatchInfo', currentMatch);
+  });
 
   //called by master match view for public match view
   //broadcasts match:tick
   socket.on('match:tick', function(data) {
+    currentMatch.matchRunning = true;
+
     //sends the match:tick event to all sockets except the current socket
     socket.broadcast.emit('match:tick', data /*{percentCompleted: data.percentCompleted, timeLeft: data.timeLeft }*/);
   });
@@ -153,6 +171,7 @@ io.sockets.on('connection', function(socket) {
   //broadcasts match:end
   socket.on('match:end', function(data) {
     socket.broadcast.emit('match:end');
+    currentMatch.matchRunning = false;
   });
 
   socket.on('match:reset', function() {
@@ -163,9 +182,6 @@ io.sockets.on('connection', function(socket) {
   socket.on('match:submit', function(data) {
     //figure out new qualScores
     //new win/loss/tie records
-
-    console.log(data);
-
     var saveData = {
       redScore: data.redAlliance.score,
       redFouls: data.redAlliance.fouls,
@@ -191,7 +207,6 @@ io.sockets.on('connection', function(socket) {
           score: NaN,
           fouls: NaN
         };
-        currentMatch.matchRunning = false;
       }
       else {
         console.error('Match data not submitted and saved properly');
@@ -210,6 +225,10 @@ io.sockets.on('connection', function(socket) {
       //negative scoreChange = positive foul count
       currentMatch[data.color+'Alliance'].fouls -= data.scoreChange;
     }
+  });
+
+  socket.on('referee:eight-ball-scored', function(scored) {
+    socket.broadcast.emit('referee:eight-ball-scored', scored);
   });
 
   //no checks on whether it exists

@@ -2,7 +2,6 @@ red_alliance = rgba(233,45,45,.75) //red
 blue_alliance = rgba(45,45,233,.75) //blue
 
 body
-  padding 50px
   font 14px "Lucida Grande", Helvetica, Arial, sans-serif
 
 .btn-group-control
@@ -21,15 +20,15 @@ body
   width 50%
 
 #leftcolred
-  border-left 7px solid red_alliance
+  border-left 15px solid red_alliance
   min-height 200px
 
 #rightcolblue
-  border-right 7px solid blue_alliance
+  border-right 15px solid blue_alliance
   min-height  200px
 
 #leftcolblue
-  border-left 7px solid blue_alliance
+  border-left 15px solid blue_alliance
   min-height 200px
 
 #topcolred
@@ -43,6 +42,9 @@ body
 /*score numbers*/
 .score
   font-size 15rem
+
+.score-small
+  font-size 10rem
 
 .glyphicon-plus
   color green
@@ -70,11 +72,10 @@ body
 .gray {
   background-color: gray;
 }
-.red {
-  background-color: red_alliance;
-}
+.red
+  background-color red_alliance
 .blue {
-  background-color: blue_alliance;
+  background-color blue_alliance
 }
 #fieldPicture {
   height: 300px;

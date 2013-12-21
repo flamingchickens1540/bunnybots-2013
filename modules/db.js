@@ -417,6 +417,7 @@ exports.getMatch = dbGetMatch;
 //exports.getMatches = dbGetMatches;
 exports.updateMatch = dbUpdateMatch;
 exports.removeMatch = dbRemoveMatch;
+exports.Promise = mongoose.Promise;
 
 
 //EVENTS - not implemented

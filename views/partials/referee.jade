@@ -13,9 +13,9 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
         p.text-center Hole Color
         .row
           .btn-group.btn-group-lg.btn-group-justified
-            btn.btn.btn-group-justified.btn-default.btn-danger(ng-click="changeHoleColor('red')") Red
-            btn.btn.btn-group-justified.btn-default(ng-click="changeHoleColor()") None
-            btn.btn.btn-group-justified.btn-default.btn-primary(ng-click="changeHoleColor('blue')") Blue
+            btn.btn.btn-group-justified.btn-default.btn-danger(ng-click="changeHoleColor('Red')") Red
+            btn.btn.btn-group-justified.btn-default(ng-click="changeHoleColor()", ng-bind="holeColor",ng-init="holeColor='None'") None
+            btn.btn.btn-group-justified.btn-default.btn-primary(ng-click="changeHoleColor('Blue')") Blue
 
 
     //penalties
@@ -73,7 +73,7 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
       .panel-body
 
         .row
-          p Normal Penalty
+          p Normal Penalty (5 pt.)
 
         .row
           .col-sm-5
@@ -99,7 +99,7 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
 
 
         .row
-          p Technical Penalty
+          p Technical Penalty (10 pt.)
           
         .row
           .col-sm-5
@@ -122,72 +122,9 @@ h2.text-center(style="margin-top:-30px;") BunnyBots Referee Panel
             btn.btn.btn-group-justified.btn-lg.btn-default.btn-primary.pull-right(ng-click="emitRefereeInput('blue','fouls',-10)")
               .glyphicon.glyphicon-plus.white-glyph
 
+        .row
+          p
 
-
-//
-  link(rel='stylesheet', type='text/css', href='/css/style.css')
-
-  h1#header.text-center BunnyBots Referee Panel
-  .container
-    .row
-          .col-sm-3
-            h3.text-center Hole Color
-            br
-            div
-              .col-sm-3.button
-              .col-sm-3.red.button
-              .col-sm-3.button
-              .col-sm-3.button
-              .col-sm-3.gray.button
-              .col-sm-3.button
-              .col-sm-3.button
-              .col-sm-3.blue.button
-          #fieldPicture.col-sm-6
-            p.text-center Placeholder for picture of field
-          .col-sm-3
-            h3.text-center     Teleop Points
-            .col-sm-1
-            .col-sm-5.text-center
-              p 0
-              .red.button.text-center
-                p ↑
-              .red.button.text-center
-                p ↓
-            .col-sm-1
-            .col-sm-4.text-center
-              p 0
-              .blue.button.text-center
-                p ↑
-              .blue.button.text-center
-                p ↓
-    .row
-          #autoBox.col-sm-4
-            h3.text-center Autonomous Points
-            .col-sm-1
-            .col-sm-5.text-center
-              p 0
-              .red.button.text-center
-                p ↑
-              .red.button.text-center
-                p ↓
-            .col-sm-5.text-center
-              p 0
-              .blue.button.text-center
-                p ↑
-              .blue.button.text-center
-                p ↓
-          .col-sm-4
-            h3.text-center Foul Points
-            .col-sm-2
-            .col-sm-4.text-center
-              p 0
-              .red.button.text-center
-                p 10 points
-              .red.button.text-center
-                p 5 points
-            .col-sm-4.text-center
-              p 0
-              .blue.button.text-center
-                p 10 points
-              .blue.button.text-center
-                p 5 points
+        .row
+          .col-sm-12
+            btn.btn.btn-large.btn-warning(ng-click="reset()") Manual Reset

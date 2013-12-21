@@ -1,7 +1,5 @@
 "use strict";
 
-window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
 var app = angular.module('bunnybots2013', [
   'bunnybots2013.masterControllers',
   'bunnybots2013.refereeControllers',
@@ -80,6 +78,7 @@ app.controller('PublicMatchViewCtrl', function ($scope, socket, audio) {
     $scope.redScore = 0;
     $scope.blueScore = 0;
     $scope.timeLeft = '2:30';
+    $scope.fontSizeClass = 'score';
     $scope.barWidth = {width: '0%'};
     $scope.barColorClass = "progress-bar-primary";
   });
@@ -90,6 +89,7 @@ app.controller('PublicMatchViewCtrl', function ($scope, socket, audio) {
     $scope.blueTeams = data.blue;
     $scope.barWidth = {width: '0%'};
     $scope.timeLeft = '2:30';
+    $scope.fontSizeClass = 'score';
     $scope.redScore = 0;
     $scope.blueScore = 0;
     $scope.barColorClass = "progress-bar-primary";
@@ -139,10 +139,12 @@ app.controller('PublicMatchViewCtrl', function ($scope, socket, audio) {
   });
 
   socket.on('match:end', function() {
+    $scope.fontSizeClass = 'score-small';
     $scope.timeLeft = 'Verifying';
   });
 
   socket.on('match:recorded', function(data) {
+    $scope.fontSizeClass = 'score-small';
     $scope.timeLeft = 'Complete';
     $scope.redScore = data.redScore;
     $scope.blueScore = data.blueScore;

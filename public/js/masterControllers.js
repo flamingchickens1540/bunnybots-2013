@@ -4,7 +4,9 @@ var master = angular.module('bunnybots2013.masterControllers', [
 ]);
 
 
-master.controller('MasterMatchViewCtrl', function ($scope, $location, socket, helper, timeFormat, audio) {
+master.controller('MasterMatchViewCtrl', function ($scope, $location, socket, helper, timeFormat, audio, $rootScope) {
+  var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
 
   socket.emit('match:getMatchInfo');
   socket.on('match:receiveMatchInfo', function(data) {
@@ -48,7 +50,6 @@ master.controller('MasterMatchViewCtrl', function ($scope, $location, socket, he
       //$apply allows for us to update the DOM as quickly as we need. Additional changes register quickly
       $scope.$apply(function() {
         
-
         //really an ng-style directive, but I only use it for this
         $scope.barWidth = {'width':percentCompleted+"%"};
         $scope.timeLeft = timeFormat.formatMilliseconds(timeFormat.MATCH_LENGTH - (time - start));
@@ -86,9 +87,13 @@ master.controller('MasterMatchViewCtrl', function ($scope, $location, socket, he
         }
       });
         
-      //if($scope.matchRunning)
-        //recursive progress bar animation call
+      if($scope.matchRunning) {
+        //can stop recursive progress bar animation call?
         requestAnimationFrame($scope.bar);
+      }
+      else {
+        //pause?
+      }
     }
 
     else {
@@ -96,6 +101,11 @@ master.controller('MasterMatchViewCtrl', function ($scope, $location, socket, he
       //does not move to next page until pause is pressed - why?
       //$location.path('/verify');
     }
+
+
+    $scope.$on('$locationChangeStart', function(event, next, current) {
+        $scope.matchRunning = false;
+    });
   };
 
   socket.on('referee:input', function(data) {

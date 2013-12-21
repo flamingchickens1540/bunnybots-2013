@@ -16,9 +16,15 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
     $scope.blueScore = 0;
     //reset hole color
     $scope.timeLeft = '2:30';
-    $scope.holeColor = null;
+    $scope.holeColor = 'None';
     $scope.eightBallOutOfPlay = false;
+    $scope.redPenalties = 0;
+    $scope.bluePenalties = 0;
+    $scope.redTechnicals = 0;
+    $scope.blueTechnicals = 0;
   };
+
+  $scope.reset = reset;
 
 
   var editStats = function editStats(color, type, num) {
@@ -27,15 +33,18 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
       	//deafults to the hole's bunny color if there is one, else the evented color
       	
       	//8-ball penalty remains with same color
-      	if($scope.holeColor && num === -8) {
+      	if(($scope.holeColor === 'Red' || $scope.holeColor === 'Blue') && num === -8) {
       		color = color;
       	}
-      	else {
-      		color = $scope.holeColor || color;
+      	else { //if num === 8, holeColor is none
+          //Red => red
+      		color = ($scope.holeColor === 'None')? color : $scope.holeColor.toLowerCase();
       	}
       }
 
-      $scope[color+'Score'] += num;
+      //$scope.apply(function() {
+        $scope[color+'Score'] += num;
+      //});
 
       if(type === 'fouls') {
         //two types of fouls
@@ -76,13 +85,16 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
   	var timeElapsed = timeFormat.MATCH_LENGTH - timeFormat.formatTimerOutput($scope.timeLeft);
   	//autonomous lasts 15 seconds
   	if(timeElapsed <= 15000) {
-  		$scope.holeColor = newColor || null;
+  		$scope.holeColor = newColor || 'None';
   	}
   };
 
   $scope.eightBallScored = function(color, wasLegal) {
   	if((color === 'red' || color === 'blue') && !$scope.eightBallOutOfPlay) {
   		$scope.eightBallOutOfPlay = true;
+      //emit eight ball scored event
+      socket.emit('referee:eight-ball-scored', true);
+
   		//due to other balls on the field
   		if(!wasLegal) {
   			$scope.emitRefereeInput(color, 'fouls', -8);
@@ -112,7 +124,13 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
     $scope.timeLeft = data.timeLeft;
   });
 
-  socket.on('referee:input', function(data) {
+  socket.on('referee:eight-ball-scored', function(scored) {
+    if(scored === true) {
+      $scope.eightBallOutOfPlay = true;
+    }
+  });
+
+  /*socket.on('referee:input', function(data) {
     //should only be one key value pair per signal
     $scope[data.color+'Score'] += data.scoreChange;
 
@@ -128,7 +146,7 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
       //a negative score means a positive penalty
       $scope[data.color+'Fouls'] -= data.scoreChange;
     }
-  });
+  });*/
 
   socket.on('match:end', function(data) {
     //show message in timeLeft

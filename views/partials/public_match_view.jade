@@ -3,14 +3,14 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
 .well.well-lg
   .row
     .col-sm-offset-3.col-sm-6
-      p.score.text-center(ng-bind="timeLeft", ng-init="timeLeft = '2:30'")
+      p.text-center(ng-bind="timeLeft", ng-init="timeLeft = '2:30'; fontSizeClass = 'score';", ng-class="fontSizeClass")
   .row
     .col-sm-12
       .progress
         .progress-bar(role="progressbar", ng-style="barWidth", ng-class="barColorClass", ng-init="barWidth = {width: '0%'}")
 
 .row
-  .col-md-2#leftcolred
+  .col-sm-2#leftcolred
     .row
       p.pull-right.teams(ng-bind="redTeams[0]")
     .row
@@ -18,17 +18,17 @@ link(rel='stylesheet', type='text/css', href='/css/style.css')
     .row
       p.pull-right.teams(ng-bind="redTeams[2]")
   
-  .col-md-8
+  .col-sm-8
     .row
-      .col-md-6
-        .well.well-sm
+      .col-sm-6
+        .well.well-sm.red
           p.text-center.score(ng-bind="redScore", ng-init="redScore=0")
       
-      .col-md-6
-        .well.well-sm
+      .col-sm-6
+        .well.well-sm.blue
           p.text-center.score(ng-bind="blueScore", ng-init="blueScore=0")
 
-  .col-md-2#rightcolblue
+  .col-sm-2#rightcolblue
     .row
       p.pull-left.teams(ng-bind="blueTeams[0]")
     .row
