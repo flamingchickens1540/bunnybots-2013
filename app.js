@@ -218,12 +218,14 @@ io.sockets.on('connection', function(socket) {
   //from referee --> match_views, other referees
   //broadcasts referee:input
   socket.on('referee:input', function(data) {
-    socket.broadcast.emit('referee:input', data);
+    if(currentMatch.matchRunning) {
+      socket.broadcast.emit('referee:input', data);
 
-    currentMatch[data.color+'Alliance'].score += data.scoreChange;
-    if(data.type === 'fouls') {
-      //negative scoreChange = positive foul count
-      currentMatch[data.color+'Alliance'].fouls -= data.scoreChange;
+      currentMatch[data.color+'Alliance'].score += data.scoreChange;
+      if(data.type === 'fouls') {
+        //negative scoreChange = positive foul count
+        currentMatch[data.color+'Alliance'].fouls -= data.scoreChange;
+      }
     }
   });
 
