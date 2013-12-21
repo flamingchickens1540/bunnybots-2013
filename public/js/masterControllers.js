@@ -145,6 +145,11 @@ master.controller('MasterMatchInputCtrl', function ($scope,
     alert(err.message);
     console.error(err.message);
   });
+
+  $scope.serverMatchReset = function() {
+    //clears the currentMach on the server
+    socket.emit('master:reset-match');
+  };
 });
 
 master.controller('MasterMatchVerifyCtrl', function ($scope, socket, $location) {

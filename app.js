@@ -244,6 +244,23 @@ io.sockets.on('connection', function(socket) {
       }
     });
   });
+
+  socket.on('master:reset-match', function() {
+    var currentMatch = {
+      id: NaN,
+      matchRunning: false,
+      redAlliance: {
+        teams: [],
+        score: NaN,
+        fouls: NaN
+      },
+      blueAlliance: {
+        teams: [],
+        score: NaN,
+        fouls: NaN
+      }
+    };
+  });
 });
 
 
