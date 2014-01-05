@@ -84,7 +84,7 @@ refs.controller('RefereeCtrl', function ($scope, socket, timeFormat) {
   $scope.changeHoleColor = function(newColor) {
   	var timeElapsed = timeFormat.MATCH_LENGTH - timeFormat.formatTimerOutput($scope.timeLeft);
   	//autonomous lasts 15 seconds
-  	if(timeElapsed <= 15000) {
+  	if(timeElapsed <= 25000) {
   		$scope.holeColor = newColor || 'None';
   	}
   };

@@ -8,12 +8,30 @@ db.Match.remove({}).exec(function(err) {
 	console.log('TEST: Removed all matches');
 });
 
-db.addTeam('1','a');
-db.addTeam('2','b');
-db.addTeam('3','c');
-db.addTeam('4','d');
-db.addTeam('5','e');
-db.addTeam('6','f');
+db.addTeam("995", "CV Robotics");
+db.addTeam("997", "Spartan Robotics");
+db.addTeam("1425", "Error Code Xero");
+db.addTeam("1432", "Mahr's Metal Beavers");
+db.addTeam("1540j", "Flaming Chickens");
+db.addTeam("1540m", "Flaming Chickens");
+db.addTeam("1540h", "Flaming Chickens");
+db.addTeam("1540a", "Flaming Chickens");
+db.addTeam("2374", "Crusaderbots");
+db.addTeam("2411" , "Rebel Alliance");
+db.addTeam("2471a", "Team Mean Machine");
+db.addTeam("2471b", "Team Mean Machine");
+db.addTeam("2517", "Green Wrenches");
+db.addTeam("2542", "Go4Bots");
+db.addTeam("2635", "Lake Monsters");
+db.addTeam("2733", "Pigmice");
+db.addTeam("2811", "Stormbots");
+db.addTeam("3131", "Gladiators");
+db.addTeam("3192" ,"Tiger Bytes");
+db.addTeam("3636", "General Robotics");
+db.addTeam("3674", "Cloverbots");
+db.addTeam("4051", "Sabin-Sharks");
+db.addTeam("4457", "Flying Fedoras");
+db.addTeam("4662", "Tribal Tech");
 
 /*
 var db = require('../modules/db.js');
